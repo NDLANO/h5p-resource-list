@@ -62,7 +62,7 @@ H5P.ResourceList = (function () {
         };
 
         const createList = resources => {
-            const resourceList = document.createElement('div');
+            const resourceList = document.createElement('ul');
             resourceList.classList.add('h5p-resource-list');
 
             resources.map(resource => {
@@ -79,6 +79,7 @@ H5P.ResourceList = (function () {
                 if( resource.hasOwnProperty('introductionImage')){
                     const image = document.createElement('img');
                     image.classList.add('h5p-resource-list-introduction-image');
+                    image.role = 'presentation';
                     image.tabIndex = -1;
                     image.alt = resource.title;
                     image.src = H5P.getPath(resource.introductionImage.path, this.id);
@@ -94,7 +95,7 @@ H5P.ResourceList = (function () {
                 if( resource.hasOwnProperty('url')){
                     const link = document.createElement('a');
                     link.target = '_blank';
-                    link.classList.add('h5p-resource-list-link')
+                    link.classList.add('h5p-resource-list-link');
                     link.href = resource.url;
                     link.onclick = event => console.log(event);
                     link.text = this.l10n.read;
@@ -127,7 +128,6 @@ H5P.ResourceList = (function () {
         };
 
         this.onResize = () => {
-            console.log("RESIZE");
             const rect = this.getRect();
             breakPoints.forEach(item => {
                 if (item.shouldAdd(rect.width)) {

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "resourceList",
+    "type": "list",
+    "label": "Resources",
+    "entity": "resource",
+    "importance": "medium",
+    "optional": true,
+    "widgets": [
+      {
+        "name": "VerticalTabs",
+        "label": "Default"
+      }
+    ],
+    "min": 1,
+    "defaultNum": 1,
+    "field":   {
+      "name": "type",
+      "type": "group",
+      "label": "Resources",
+      "importance": "medium",
+      "description": "Optional links to resources.",
+      "fields": [
+        {
+          "type": "text",
+          "name": "title",
+          "label": "Resource title"
+        },
+        {
+          "type": "text",
+          "widget": "textarea",
+          "name": "introduction",
+          "label": "Introduction",
+          "maxLength": 300,
+          "optional": true
+        },
+        {
+          "type": "text",
+          "widget": "text",
+          "name": "url",
+          "label": "URL",
+          "optional": true
+        },
+        {
+          "type": "image",
+          "name": "introductionImage",
+          "label": "Introduction image",
+          "optional": true
+        }
+      ]
+    }
+  }
+]

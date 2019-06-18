@@ -1,0 +1,104 @@
+$bgColor: #e3f4f7;
+$textColor: #2070e3;
+$dividerColor: #eaeaea;
+
+.h5p-resource-list-wrapper {
+
+  width: 100%;
+
+  &.h5p-medium-tablet-size .h5p-resource-list-container {
+    width: 70%;
+    padding: 30px;
+  }
+
+  &.h5p-large-tablet-size .h5p-resource-list-container {
+    width: 35%;
+    padding: 40px;
+  }
+
+  &.h5p-large-size .h5p-resource-list-container {
+    width: 35%;
+    padding: 40px;
+  }
+}
+
+.h5p-resource-list-bg {
+  display: none;
+  background-color: rgba(black, 0.6);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.h5p-resource-list-container {
+  right: -100%;
+  transition: right 250ms linear;
+  width: 83%;
+  position: absolute;
+  color: $textColor;
+  padding: 10px;
+  background-color: $bgColor;
+  top: 0;
+  bottom: 0;
+}
+
+.h5p-resource-list {
+  list-style: none;
+}
+
+.h5p-resource-list-element:not(:last-child) {
+  border-bottom: 1px solid $dividerColor;
+  padding-bottom: 20px;
+}
+
+.h5p-resource-list-introduction-image {
+  max-height: 80px;
+  float: right;
+  margin: 0 20px 20px 20px;
+}
+
+.h5p-resource-list-header {
+  text-align: right;
+}
+
+.h5p-resource-list-link {
+  text-decoration: none;
+  &:after {
+    @extend .h5p-icons;
+    content: "\f061";
+  }
+}
+
+.h5p-resource-list-element p {
+  color: initial;
+}
+
+.h5p-icons {
+  text-decoration: none;
+  font-family: 'H5PFontAwesome4';
+  color: $textColor;
+  margin-left: 4px;
+}
+
+
+.h5p-resource-list-hide {
+  cursor: pointer;
+
+  &:before {
+    @extend .h5p-icons;
+    content: '\f00d';
+    float: right;
+  }
+}
+
+.h5p-resource-active {
+  .h5p-resource-list-container {
+    right: 0;
+    overflow: auto;
+  }
+
+  .h5p-resource-list-bg {
+    display: block;
+  }
+}

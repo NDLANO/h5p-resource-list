@@ -11,11 +11,11 @@ H5P.ResourceList = (function () {
         },
         {
             "className": "h5p-medium-tablet-size",
-            "shouldAdd": width => width > 480 && width <= 768
+            "shouldAdd": width => width > 480 && width < 768
         },
         {
             "className": "h5p-large-tablet-size",
-            "shouldAdd": width => width > 768 && width < 1023
+            "shouldAdd": width => width >= 768 && width < 1024
         },
         {
             "className": "h5p-large-size",
@@ -57,6 +57,7 @@ H5P.ResourceList = (function () {
         const createBackground = () => {
             const listBackground = document.createElement('div');
             listBackground.classList.add('h5p-resource-list-bg');
+            listBackground.onclick = this.hide;
 
             return listBackground;
         };

@@ -1,6 +1,6 @@
+import "core-js";
 import './ResourceList.scss';
-import languageEn from '../language/.en.json';
-import languageNb from '../language/nb';
+import * as languages from '../language';
 
 H5P.ResourceList = (function () {
 
@@ -23,7 +23,7 @@ H5P.ResourceList = (function () {
         },
     ];
 
-    const supportedLanguages = {".en": languageEn, nb: languageNb};
+    const supportedLanguages = {en: languages.languageEn, nb: languages.languageNb};
 
     function ResourceList(params, id, language) {
         H5P.EventDispatcher.call(this);
@@ -31,7 +31,7 @@ H5P.ResourceList = (function () {
         this.params = params;
         this.id = id;
 
-        this.language = typeof language !== 'undefined' && supportedLanguages.hasOwnProperty(language) ? language : '.en';
+        this.language = typeof language !== 'undefined' && supportedLanguages.hasOwnProperty(language) ? language : 'en';
 
         let wrapper, listContainer;
 

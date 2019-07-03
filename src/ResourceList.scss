@@ -41,6 +41,7 @@ $dividerColor: #eaeaea;
   background-color: $bgColor;
   top: 0;
   bottom: 0;
+  z-index: 1;
 }
 
 .h5p-resource-list {
@@ -73,6 +74,7 @@ $dividerColor: #eaeaea;
 
 .h5p-resource-list-element p {
   color: initial;
+  line-height: 28px;
 }
 
 .h5p-icons {

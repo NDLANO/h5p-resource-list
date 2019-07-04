@@ -1,4 +1,3 @@
-import "core-js";
 import './ResourceList.scss';
 import * as languages from '../language';
 

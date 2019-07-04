@@ -1,5 +1,7 @@
 import './ResourceList.scss';
-import * as languages from '../language';
+import languageEn from '../language/.en.json';
+import languageNb from '../language/nb';
+import languageNn from '../language/nn';
 
 H5P.ResourceList = (function () {
 
@@ -22,7 +24,12 @@ H5P.ResourceList = (function () {
         },
     ];
 
-    const supportedLanguages = {en: languages.languageEn, nb: languages.languageNb};
+    const supportedLanguages = {
+        ".en": languageEn,
+        en: languageEn,
+        nb: languageNb,
+        nn: languageNn
+    };
 
     function ResourceList(params, id, language) {
         H5P.EventDispatcher.call(this);
@@ -30,7 +37,7 @@ H5P.ResourceList = (function () {
         this.params = params;
         this.id = id;
 
-        this.language = typeof language !== 'undefined' && supportedLanguages.hasOwnProperty(language) ? language : 'en';
+        this.language = typeof language !== 'undefined' && supportedLanguages.hasOwnProperty(language) ? language : '.en';
 
         let wrapper, listContainer;
 

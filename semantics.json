@@ -49,5 +49,25 @@
         }
       ]
     }
+  },
+  {
+    "name": "l10n",
+    "type": "group",
+    "label": "Localize",
+    "common": true,
+    "fields": [
+      {
+        "name": "hide",
+        "type": "text",
+        "label": "Translation for \"Hide\"",
+        "default": "Hide"
+      },
+      {
+        "name": "read",
+        "type": "text",
+        "label": "Translation for \"Read\"",
+        "default": "Read"
+      }
+    ]
   }
 ]

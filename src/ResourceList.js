@@ -122,7 +122,10 @@ H5P.ResourceList = (function () {
             return wrapper.getBoundingClientRect();
         };
 
-        this.onResize = () => {
+        this.resize = () => {
+            if( !wrapper){
+                return;
+            }
             const rect = this.getRect();
             breakPoints.forEach(item => {
                 if (item.shouldAdd(rect.width)) {
@@ -140,7 +143,7 @@ H5P.ResourceList = (function () {
 
         this.hide = () => wrapper.classList.remove('h5p-resource-active');
 
-        this.on('resize', this.onResize);
+        H5P.$window.on('resize', this.resize.bind(this));
     }
 
     return ResourceList;

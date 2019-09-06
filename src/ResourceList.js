@@ -28,6 +28,7 @@ H5P.ResourceList = (function () {
         this.id = id;
 
         let wrapper, listContainer;
+        this.container = null;
 
         this.l10n = Object.assign({
             hide: 'Hide',
@@ -43,6 +44,8 @@ H5P.ResourceList = (function () {
             hideButton.onclick = this.hide;
             hideButton.classList.add('h5p-resource-list-hide');
             hideButton.text = this.l10n.hide;
+            hideButton.tabIndex = 0;
+            hideButton.onkeyup = this.hide;
 
             wrapper.appendChild(hideButton);
             return wrapper;
@@ -103,19 +106,7 @@ H5P.ResourceList = (function () {
         };
 
         this.attach = $container => {
-            wrapper = document.createElement('div');
-            wrapper.classList.add('h5p-resource-list-wrapper');
-
-            listContainer = document.createElement('div');
-            listContainer.classList.add('h5p-resource-list-container');
-
-            listContainer.appendChild(createHeader());
-            listContainer.appendChild(createList(this.params.resourceList));
-
-            wrapper.appendChild(createBackground());
-            wrapper.appendChild(listContainer);
-
-            $container.appendChild(wrapper);
+            this.container = $container;
         };
 
         this.getRect = () => {
@@ -137,14 +128,38 @@ H5P.ResourceList = (function () {
         };
 
         this.show = () => {
-            wrapper.classList.add('h5p-resource-active');
-            this.trigger('resize');
+            wrapper = document.createElement('div');
+            wrapper.classList.add('h5p-resource-list-wrapper');
+
+            listContainer = document.createElement('div');
+            listContainer.classList.add('h5p-resource-list-container');
+
+            listContainer.appendChild(createHeader());
+            listContainer.appendChild(createList(this.params.resourceList));
+
+            wrapper.appendChild(createBackground());
+            wrapper.appendChild(listContainer);
+
+            this.container.appendChild(wrapper);
+            setTimeout(() => {
+                wrapper.classList.add('h5p-resource-active');
+                this.resize();
+            }, 50);
         };
 
-        this.hide = () => wrapper.classList.remove('h5p-resource-active');
+        this.hide = event => {
+            if( !event.keyCode || event.keyCode === 13){
+                wrapper.classList.remove('h5p-resource-active');
+                setTimeout(() => this.container.removeChild(wrapper), 250);
+            }
+        };
 
         H5P.$window.on('resize', this.resize.bind(this));
     }
+
+    // Inherit prototype properties
+    ResourceList.prototype = Object.create(H5P.EventDispatcher.prototype);
+    ResourceList.prototype.constructor = ResourceList;
 
     return ResourceList;
 })();

@@ -1,4 +1,4 @@
-#H5P Resource list
+# H5P Resource list
 
 Used in other libraries to let the author list additional resources that might be relevant when interacting with that H5P.
 

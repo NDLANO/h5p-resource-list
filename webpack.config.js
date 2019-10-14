@@ -36,6 +36,7 @@ const config = {
         test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
         include: [
           path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'assets'),
         ],
         loader: 'url-loader?limit=100000'
       }

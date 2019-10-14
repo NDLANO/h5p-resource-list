@@ -1,30 +1,48 @@
-$bgColor: #e3f4f7;
+$bgColor: #fff;
 $textColor: #2070e3;
-$dividerColor: #eaeaea;
 
 .h5p-resource-list-wrapper {
-
   width: 100%;
 
-  &.h5p-medium-tablet-size .h5p-resource-list-container {
-    width: 50%;
-    padding: 30px 30px 30px 0;
+  &.h5p-medium-tablet-size.h5p-resource-active .h5p-resource-list-container,
+  &.h5p-large-tablet-size.h5p-resource-active .h5p-resource-list-container,
+  &.h5p-large-size.h5p-resource-active .h5p-resource-list-container
+  {
+    .h5p-resource-list-element {
+      div {
+        flex-direction: row-reverse;
+      }
+
+      .h5p-resource-list-introduction-image {
+        max-width: 5.625em;
+        margin-left: 0.8em;
+        align-self: flex-start;
+      }
+    }
+
+    .h5p-resource-list {
+      margin: 0;
+      padding: 0 10%;
+    }
   }
 
-  &.h5p-large-tablet-size .h5p-resource-list-container {
+  &.h5p-medium-tablet-size.h5p-resource-active .h5p-resource-list-container {
+    width: 60%;
+  }
+
+  &.h5p-large-tablet-size.h5p-resource-active .h5p-resource-list-container {
     width: 40%;
-    padding: 40px 40px 40px 0;
   }
 
-  &.h5p-large-size .h5p-resource-list-container {
+  &.h5p-large-size.h5p-resource-active .h5p-resource-list-container {
     width: 35%;
-    padding: 40px 40px 40px 0;
   }
 }
 
 .h5p-resource-list-bg {
-  display: none;
-  background-color: rgba(black, 0.6);
+  opacity: 0;
+  transition: opacity 250ms;
+  background-color: black;
   position: absolute;
   top: 0;
   left: 0;
@@ -34,76 +52,130 @@ $dividerColor: #eaeaea;
 }
 
 .h5p-resource-list-container {
-  right: -100%;
-  transition: right 250ms linear;
-  width: 83%;
-  position: absolute;
-  color: $textColor;
-  padding: 10px;
-  background-color: $bgColor;
+  width: 0;
+  right: 0;
   top: 0;
   bottom: 0;
+  position: absolute;
+  background-color: $bgColor;
+  transition: width 150ms ease-in-out;
   z-index: 1;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
 }
 
 .h5p-resource-list {
   list-style: none;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0 4%;
 }
 
-.h5p-resource-list-element:not(:last-child) {
-  border-bottom: 1px solid $dividerColor;
-  padding-bottom: 20px;
-}
+.h5p-resource-list-element {
+  padding-bottom: 1.2em;
 
-.h5p-resource-list-introduction-image {
-  max-height: 80px;
-  max-width: 90px;
-  float: right;
-  margin: 0 10px 10px 10px;
-}
+  h3,
+  a {
+    color: $textColor;
+  }
 
-.h5p-resource-list-header {
-  text-align: right;
-}
+  h3 {
+    margin: 1em 0 0 0;
+  }
 
-.h5p-resource-list-link {
-  text-decoration: none;
-  &:after {
-    @extend .h5p-icons;
-    content: "\f061";
+  div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  p {
+    color: initial;
+    line-height: 1.75em;
+    font-size: 0.875em;
+    margin: 0;
+    flex: auto;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 0.0625em solid rgba(37,59,115,0.1);
   }
 }
 
-.h5p-resource-list-element p {
-  color: initial;
-  line-height: 28px;
+.h5p-resource-list-introduction-image {
+  max-width: 100%;
+  align-self: center;
+  margin-bottom: 1em;
 }
 
-.h5p-icons {
-  text-decoration: none;
+.h5p-resource-list-header {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
+  height: 4em;
+  padding: 0.5em 1em;
+
+  h1 {
+    display: inline;
+    margin-left: 0.6em;
+  }
+
+  img {
+    height: 2em;
+  }
+}
+
+.h5p-resource-list-link {
+  display: inline-flex;
+  border: 0.08em solid #dbe2e8;
+  padding: 0.25em 0.5em;
+  border-radius: 0.1875em;
+  margin-top: 1em;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    background-color: #edf4fd;
+  }
+
+  .h5p-icon {
+    margin-left: 0.4em;
+    width: 1.2em;
+    height: 1.2em;
+  }
+}
+
+.h5p-icon {
   font-family: 'H5PFontAwesome4';
   color: $textColor;
-  margin-left: 4px;
+  background-size: cover;
+  width: 1em;
+  height: 1em;
 }
 
 
 .h5p-resource-list-hide {
   cursor: pointer;
+  display: flex;
+  margin-left: auto;
+  color: $textColor;
+  background-color: transparent;
+  border: 0;
+  align-items: center;
 
-  &:before {
-    @extend .h5p-icons;
-    content: '\f00d';
-    float: right;
+  .h5p-icon {
+    width: 2em;
+    height: 2em;
   }
 }
 
 .h5p-resource-active {
   .h5p-resource-list-container {
-    right: 0;
-    overflow: auto;
+    width: 90%;
   }
 
   .h5p-resource-list-bg {
-    display: block;
+    opacity: 0.8;
   }
 }

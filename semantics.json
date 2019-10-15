@@ -68,6 +68,12 @@
         "type": "text",
         "label": "Translation for \"Read\"",
         "default": "Read"
+      },
+      {
+        "name": "resources",
+        "type": "text",
+        "label": "Translation for \"Resources\"",
+        "default": "Resources"
       }
     ]
   }

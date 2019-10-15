@@ -37,6 +37,10 @@
         {
           "label": "Oversettelse for  \"Les\"",
           "default": "Les"
+        },
+        {
+          "label": "Oversettelse for  \"Ressurser\"",
+          "default": "Ressurser"
         }
       ]
     }

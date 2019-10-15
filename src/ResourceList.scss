@@ -63,6 +63,7 @@ $textColor: #2070e3;
   background-size: cover;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .h5p-resource-list {
@@ -113,7 +114,7 @@ $textColor: #2070e3;
   display: flex;
   align-items: center;
   box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
-  height: 4em;
+  min-height: 4em;
   padding: 0.5em 1em;
 
   h1 {

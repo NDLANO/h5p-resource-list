@@ -1,12 +1,43 @@
+$browser-context: 16;
+
+@function em($pixels, $context: $browser-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1em;
+}
+
+@mixin addStates($textColor: #2070e3, $activeColor: #1d53b8, $useUnderline: false ) {
+  color: $textColor;
+  text-decoration: none;
+
+  @if($useUnderline){
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:active {
+    color: $activeColor;
+  }
+}
+
 $bgColor: #fff;
 $textColor: #2070e3;
+$activeColor: #1d53b8;
+$borderRadius: em(5px);
 
 .h5p-resource-list-wrapper {
   width: 100%;
 
-  &.h5p-medium-tablet-size.h5p-resource-active .h5p-resource-list-container,
-  &.h5p-large-tablet-size.h5p-resource-active .h5p-resource-list-container,
-  &.h5p-large-size.h5p-resource-active .h5p-resource-list-container
+  &.h5p-medium-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
+  &.h5p-large-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
+  &.h5p-large-size.h5p-resource-list-active .h5p-resource-list-container
   {
     .h5p-resource-list-element {
       div {
@@ -14,8 +45,8 @@ $textColor: #2070e3;
       }
 
       .h5p-resource-list-introduction-image {
-        max-width: 5.625em;
-        margin-left: 0.8em;
+        max-width: em(90px);
+        margin-left: em(13px);
         align-self: flex-start;
       }
     }
@@ -26,29 +57,29 @@ $textColor: #2070e3;
     }
   }
 
-  &.h5p-medium-tablet-size.h5p-resource-active .h5p-resource-list-container {
+  &.h5p-medium-tablet-size.h5p-resource-list-active .h5p-resource-list-container {
     width: 60%;
   }
 
-  &.h5p-large-tablet-size.h5p-resource-active .h5p-resource-list-container {
+  &.h5p-large-tablet-size.h5p-resource-list-active .h5p-resource-list-container {
     width: 40%;
   }
 
-  &.h5p-large-size.h5p-resource-active .h5p-resource-list-container {
-    width: 35%;
+  &.h5p-large-size.h5p-resource-list-active .h5p-resource-list-container {
+    width: 40%;
   }
 }
 
 .h5p-resource-list-bg {
   opacity: 0;
-  transition: opacity 250ms;
+  transition: opacity 150ms;
   background-color: black;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 1;
+  visibility: hidden;
 }
 
 .h5p-resource-list-container {
@@ -58,12 +89,13 @@ $textColor: #2070e3;
   bottom: 0;
   position: absolute;
   background-color: $bgColor;
-  transition: width 150ms ease-in-out;
+  transition: width 150ms ease-in-out, visibility 150ms;
   z-index: 1;
   background-size: cover;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  visibility: hidden;
 }
 
 .h5p-resource-list {
@@ -74,15 +106,15 @@ $textColor: #2070e3;
 }
 
 .h5p-resource-list-element {
-  padding-bottom: 1.2em;
+  padding-bottom: em(19px);
 
-  h3,
   a {
-    color: $textColor;
+    @include addStates($textColor, $activeColor);
   }
 
   h3 {
-    margin: 1em 0 0 0;
+    margin: em(16px) 0 0 0;
+    @include addStates($textColor, $activeColor, true);
   }
 
   div {
@@ -93,90 +125,146 @@ $textColor: #2070e3;
 
   p {
     color: initial;
-    line-height: 1.75em;
-    font-size: 0.875em;
+    line-height: em(28px);
+    font-size: em(14px);
     margin: 0;
     flex: auto;
   }
 
   &:not(:last-child) {
-    border-bottom: 0.0625em solid rgba(37,59,115,0.1);
+    border-bottom: em(1px) solid rgba(37,59,115,0.1);
   }
 }
 
 .h5p-resource-list-introduction-image {
   max-width: 100%;
   align-self: center;
-  margin-bottom: 1em;
+  margin-bottom: em(16px);
 }
 
 .h5p-resource-list-header {
   display: flex;
   align-items: center;
   box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
-  min-height: 4em;
-  padding: 0.5em 1em;
+  min-height: em(64px);
+  padding: em(8px) em(16px);
 
   h1 {
-    display: inline;
-    margin-left: 0.6em;
+    margin-left: em(10px);
+    font-size: em(22px);
   }
 
-  img {
-    height: 2em;
+  & > img {
+    height: auto;
   }
 }
 
 .h5p-resource-list-link {
   display: inline-flex;
-  border: 0.08em solid #dbe2e8;
-  padding: 0.25em 0.5em;
-  border-radius: 0.1875em;
-  margin-top: 1em;
+  border: em(1px) solid #dbe2e8;
+  padding: em(4px) em(8px);
+  border-radius: $borderRadius;
+  margin-top: em(16px);
   align-items: center;
+  font-size: em(14px);
+
+  &,
+  span{
+    @include addStates();
+  }
 
   &:hover,
   &:focus {
-    background-color: #edf4fd;
+    background-color: #ebf0ff;
+  }
+
+  &:active {
+    border-color: $activeColor;
+    background-color: #ebf0ff;
   }
 
   .h5p-icon {
     margin-left: 0.4em;
-    width: 1.2em;
-    height: 1.2em;
+    width: em(18px);
+    height: em(18px);
   }
 }
 
 .h5p-icon {
-  font-family: 'H5PFontAwesome4';
-  color: $textColor;
-  background-size: cover;
-  width: 1em;
-  height: 1em;
+  height: em(16px);
+  display: inline-block;
 }
 
 
 .h5p-resource-list-hide {
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   margin-left: auto;
   color: $textColor;
   background-color: transparent;
   border: 0;
   align-items: center;
 
+  #hideButton {
+    font-size: em(14px);
+    @include addStates($textColor, $activeColor, true);
+  }
+
   .h5p-icon {
-    width: 2em;
-    height: 2em;
+    height: em(20);
   }
 }
 
-.h5p-resource-active {
+.h5p-resource-list-active {
   .h5p-resource-list-container {
+    visibility: visible;
     width: 90%;
   }
 
   .h5p-resource-list-bg {
     opacity: 0.8;
+    visibility: visible;
+  }
+}
+
+.h5p-resource-list-button {
+  border-radius: $borderRadius;
+  padding: em(3);
+  border: em(1) solid #dbe2e8;
+  background-color: #ffffff;
+
+  &:hover {
+    border: em(1px) solid #2071e3;
+  }
+
+  &:active {
+    border: em(1px) solid #1d53b8;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    border-radius: inherit;
+    padding: em(4px) em(5px);
+    background-color: rgba(219,226,232,0.25);
+    background-size: cover;
+
+    &:hover {
+      background-color: inherit;
+    }
+
+    &:active {
+      background-color: #ebf0ff;
+    }
+  }
+
+  span {
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  span,
+  img {
+    margin-right: em(7px);
   }
 }

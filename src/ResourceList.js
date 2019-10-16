@@ -1,5 +1,5 @@
 import './ResourceList.scss';
-import resourceImage from '../assets/resource.svg';
+import resourceImage from '../assets/resources-icon.svg';
 import closeImage from '../assets/close.svg';
 import readImage from '../assets/read.svg';
 
@@ -55,19 +55,18 @@ H5P.ResourceList = (function () {
             wrapper.appendChild(header);
 
             const hideContainer = document.createElement('button');
-            hideContainer.onclick = this.hide;
+            hideContainer.onclick = this.toggleResources;
             hideContainer.classList.add('h5p-resource-list-hide');
             hideContainer.setAttribute('aria-labelledby', 'hideButton');
 
-            const hideButton = document.createElement('span');
-            hideButton.id = 'hideButton';
-            hideButton.innerText = this.l10n.hide;
-            hideContainer.appendChild(hideButton);
+            const buttonText = document.createElement('span');
+            buttonText.id = 'hideButton';
+            buttonText.innerText = this.l10n.hide;
+            hideContainer.appendChild(buttonText);
 
-            const hideIcon = document.createElement('span');
+            const hideIcon = document.createElement('img');
             hideIcon.setAttribute('aria-hidden', true);
-            hideIcon.className = 'h5p-icon';
-            hideIcon.style.backgroundImage = 'url("' + closeImage + '")';
+            hideIcon.src = closeImage;
             hideContainer.appendChild(hideIcon);
 
             wrapper.appendChild(hideContainer);
@@ -77,7 +76,7 @@ H5P.ResourceList = (function () {
         const createBackground = () => {
             const listBackground = document.createElement('div');
             listBackground.classList.add('h5p-resource-list-bg');
-            //listBackground.onclick = this.hide;
+            listBackground.onclick = this.toggleResources;
 
             return listBackground;
         };
@@ -128,11 +127,11 @@ H5P.ResourceList = (function () {
                     link.text = this.l10n.read;
                     link.setAttribute('aria-labelledby', labelAnchor);
 
-                    const hideIcon = document.createElement('span');
-                    hideIcon.setAttribute('aria-hidden', true);
-                    hideIcon.className = 'h5p-icon';
-                    hideIcon.style.backgroundImage = 'url("' + readImage + '")';
-                    link.appendChild(hideIcon);
+                    const readIcon = document.createElement('span');
+                    readIcon.setAttribute('aria-hidden', true);
+                    readIcon.className = 'h5p-icon';
+                    readIcon.style.backgroundImage = "url('" + readImage + "')";
+                    link.appendChild(readIcon);
 
                     listElement.appendChild(link);
                 }
@@ -140,10 +139,6 @@ H5P.ResourceList = (function () {
                 resourceList.appendChild(listElement);
             });
             return resourceList;
-        };
-
-        this.attach = $container => {
-            this.container = $container;
         };
 
         this.getRect = () => {
@@ -164,9 +159,32 @@ H5P.ResourceList = (function () {
             });
         };
 
-        this.show = () => {
+        this.attach = $container => {
+            this.container = $container;
+
             wrapper = document.createElement('div');
             wrapper.classList.add('h5p-resource-list-wrapper');
+
+            const buttonContent = document.createElement('div');
+            const headerIcon = document.createElement('img');
+            headerIcon.setAttribute('aria-hidden', true);
+            headerIcon.src = resourceImage;
+            buttonContent.appendChild(headerIcon);
+
+            const buttonText = document.createElement('span');
+            buttonText.innerText = this.l10n.resources;
+            buttonContent.appendChild(buttonText);
+
+            const readIcon = document.createElement('img');
+            readIcon.setAttribute('aria-hidden', true);
+            readIcon.src = readImage;
+            buttonContent.appendChild(readIcon);
+
+            const button = document.createElement('button');
+            button.onclick = this.toggleResources;
+            button.className = 'h5p-resource-list-button';
+            button.appendChild(buttonContent);
+            wrapper.appendChild(button);
 
             listContainer = document.createElement('div');
             listContainer.classList.add('h5p-resource-list-container');
@@ -178,16 +196,12 @@ H5P.ResourceList = (function () {
             wrapper.appendChild(listContainer);
 
             this.container.appendChild(wrapper);
-            setTimeout(() => {
-                wrapper.classList.add('h5p-resource-active');
-                this.resize();
-            }, 50);
+            setTimeout(this.resize, 0);
         };
 
-        this.hide = event => {
+        this.toggleResources = event => {
             if( !event.keyCode || event.keyCode === 13){
-                wrapper.classList.remove('h5p-resource-active');
-                setTimeout(() => this.container.removeChild(wrapper), 250);
+                wrapper.classList.toggle('h5p-resource-list-active');
             }
         };
 

@@ -38,6 +38,7 @@ H5P.ResourceList = (function () {
             hide: 'Hide',
             read: 'Read',
             resources: 'Resources',
+            resourcesHeaderLogo: 'Resources logo',
         }, params.l10n);
 
 
@@ -48,6 +49,7 @@ H5P.ResourceList = (function () {
             const headerImage =  document.createElement('img');
             headerImage.setAttribute('aria-hidden', true);
             headerImage.src = resourceImage;
+            headerImage.alt = this.l10n.resourcesHeaderLogo;
             wrapper.appendChild(headerImage);
 
             const header = document.createElement('h1');
@@ -55,7 +57,7 @@ H5P.ResourceList = (function () {
             wrapper.appendChild(header);
 
             const hideContainer = document.createElement('button');
-            hideContainer.onclick = this.toggleResources;
+            hideContainer.onclick = this.onClick;
             hideContainer.classList.add('h5p-resource-list-hide');
             hideContainer.setAttribute('aria-labelledby', 'hideButton');
 
@@ -64,9 +66,9 @@ H5P.ResourceList = (function () {
             buttonText.innerText = this.l10n.hide;
             hideContainer.appendChild(buttonText);
 
-            const hideIcon = document.createElement('img');
+            const hideIcon = document.createElement('span');
             hideIcon.setAttribute('aria-hidden', true);
-            hideIcon.src = closeImage;
+            hideIcon.className = "fa fa-close";
             hideContainer.appendChild(hideIcon);
 
             wrapper.appendChild(hideContainer);
@@ -76,7 +78,7 @@ H5P.ResourceList = (function () {
         const createBackground = () => {
             const listBackground = document.createElement('div');
             listBackground.classList.add('h5p-resource-list-bg');
-            listBackground.onclick = this.toggleResources;
+            listBackground.onclick = this.onClick;
 
             return listBackground;
         };
@@ -91,8 +93,9 @@ H5P.ResourceList = (function () {
                 }
                 const listElement = document.createElement('li');
                 listElement.classList.add('h5p-resource-list-element');
+                listElement.setAttribute('role', 'article');
 
-                const title = document.createElement('h3');
+                const title = document.createElement('h2');
                 let labelAnchor = "title_" + index;
                 title.id = labelAnchor;
                 title.textContent = resource.title;
@@ -129,8 +132,7 @@ H5P.ResourceList = (function () {
 
                     const readIcon = document.createElement('span');
                     readIcon.setAttribute('aria-hidden', true);
-                    readIcon.className = 'h5p-icon';
-                    readIcon.style.backgroundImage = "url('" + readImage + "')";
+                    readIcon.className = 'fa fa-arrow-right';
                     link.appendChild(readIcon);
 
                     listElement.appendChild(link);
@@ -142,7 +144,7 @@ H5P.ResourceList = (function () {
         };
 
         this.getRect = () => {
-            return wrapper.getBoundingClientRect();
+            return this.container.getBoundingClientRect();
         };
 
         this.resize = () => {
@@ -175,13 +177,13 @@ H5P.ResourceList = (function () {
             buttonText.innerText = this.l10n.resources;
             buttonContent.appendChild(buttonText);
 
-            const readIcon = document.createElement('img');
+            const readIcon = document.createElement('span');
             readIcon.setAttribute('aria-hidden', true);
-            readIcon.src = readImage;
+            readIcon.className = "fa fa-arrow-right";
             buttonContent.appendChild(readIcon);
 
             const button = document.createElement('button');
-            button.onclick = this.toggleResources;
+            button.onclick = this.onClick;
             button.className = 'h5p-resource-list-button';
             button.appendChild(buttonContent);
             wrapper.appendChild(button);
@@ -199,10 +201,10 @@ H5P.ResourceList = (function () {
             setTimeout(this.resize, 0);
         };
 
+        this.onClick = event => this.toggleResources(event);
+
         this.toggleResources = event => {
-            if( !event.keyCode || event.keyCode === 13){
-                wrapper.classList.toggle('h5p-resource-list-active');
-            }
+            wrapper.classList.toggle('h5p-resource-list-active');
         };
 
         H5P.$window.on('resize', this.resize.bind(this));

@@ -12,13 +12,14 @@ $browser-context: 16;
   @return $pixels / $context * 1em;
 }
 
-@mixin addStates($textColor: #2070e3, $activeColor: #1d53b8, $useUnderline: false ) {
+@mixin addStates($textColor, $activeColor, $useUnderline: false ) {
   color: $textColor;
   text-decoration: none;
 
   @if($useUnderline){
     &:hover {
       text-decoration: underline;
+      color: $textColor;
     }
   }
 
@@ -30,11 +31,9 @@ $browser-context: 16;
 $bgColor: #fff;
 $textColor: #2070e3;
 $activeColor: #1d53b8;
-$borderRadius: em(5px);
+$borderRadius: 5px;
 
 .h5p-resource-list-wrapper {
-  width: 100%;
-
   &.h5p-medium-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
   &.h5p-large-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
   &.h5p-large-size.h5p-resource-list-active .h5p-resource-list-container
@@ -46,7 +45,7 @@ $borderRadius: em(5px);
 
       .h5p-resource-list-introduction-image {
         max-width: em(90px);
-        margin-left: em(13px);
+        margin-left: 0.8rem;
         align-self: flex-start;
       }
     }
@@ -80,6 +79,7 @@ $borderRadius: em(5px);
   height: 100%;
   width: 100%;
   visibility: hidden;
+  z-index: 9;
 }
 
 .h5p-resource-list-container {
@@ -90,7 +90,7 @@ $borderRadius: em(5px);
   position: absolute;
   background-color: $bgColor;
   transition: width 150ms ease-in-out, visibility 150ms;
-  z-index: 1;
+  z-index: 10;
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -106,40 +106,41 @@ $borderRadius: em(5px);
 }
 
 .h5p-resource-list-element {
-  padding-bottom: em(19px);
+  padding-bottom: 1.2rem;
 
   a {
     @include addStates($textColor, $activeColor);
   }
 
-  h3 {
+  h2 {
     margin: em(16px) 0 0 0;
+    font-size: em(16px);
     @include addStates($textColor, $activeColor, true);
   }
 
   div {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
+    margin-top: 1rem;
   }
 
   p {
     color: initial;
     line-height: em(28px);
-    font-size: em(14px);
+    font-size: 0.9rem;
     margin: 0;
     flex: auto;
   }
 
   &:not(:last-child) {
-    border-bottom: em(1px) solid rgba(37,59,115,0.1);
+    border-bottom: 1px solid rgba(37,59,115,0.1);
   }
 }
 
 .h5p-resource-list-introduction-image {
   max-width: 100%;
   align-self: center;
-  margin-bottom: em(16px);
+  margin-bottom: 1rem;
 }
 
 .h5p-resource-list-header {
@@ -147,11 +148,11 @@ $borderRadius: em(5px);
   align-items: center;
   box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
   min-height: em(64px);
-  padding: em(8px) em(16px);
+  padding: 0.5rem 1rem;
 
   h1 {
-    margin-left: em(10px);
-    font-size: em(22px);
+    margin-left: 0.6rem;
+    font-size: 1.4rem;
   }
 
   & > img {
@@ -161,16 +162,15 @@ $borderRadius: em(5px);
 
 .h5p-resource-list-link {
   display: inline-flex;
-  border: em(1px) solid #dbe2e8;
-  padding: em(4px) em(8px);
+  border: 1px solid #dbe2e8;
+  padding: 0.25rem 0.5rem;
   border-radius: $borderRadius;
-  margin-top: em(16px);
+  margin-top: 1rem;
   align-items: center;
-  font-size: em(14px);
+  font-size: 0.875rem;
 
-  &,
   span{
-    @include addStates();
+    margin-left: 0.5rem;
   }
 
   &:hover,
@@ -182,19 +182,7 @@ $borderRadius: em(5px);
     border-color: $activeColor;
     background-color: #ebf0ff;
   }
-
-  .h5p-icon {
-    margin-left: 0.4em;
-    width: em(18px);
-    height: em(18px);
-  }
 }
-
-.h5p-icon {
-  height: em(16px);
-  display: inline-block;
-}
-
 
 .h5p-resource-list-hide {
   cursor: pointer;
@@ -205,13 +193,20 @@ $borderRadius: em(5px);
   border: 0;
   align-items: center;
 
+  &:hover,
+  &:active,
+  &:focus {
+    color: $textColor;
+  }
+
   #hideButton {
-    font-size: em(14px);
+    font-size: 0.875rem;
     @include addStates($textColor, $activeColor, true);
   }
 
-  .h5p-icon {
-    height: em(20);
+  .fa {
+    margin-left: 0.25rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -229,25 +224,26 @@ $borderRadius: em(5px);
 
 .h5p-resource-list-button {
   border-radius: $borderRadius;
-  padding: em(3);
-  border: em(1) solid #dbe2e8;
+  padding: 0.2rem;
+  border: 1px solid #dbe2e8;
   background-color: #ffffff;
 
   &:hover {
-    border: em(1px) solid #2071e3;
+    border-color: #2071e3;
   }
 
   &:active {
-    border: em(1px) solid #1d53b8;
+    border-color: #1d53b8;
   }
 
   div {
     display: flex;
     align-items: center;
     border-radius: inherit;
-    padding: em(4px) em(5px);
+    padding: 0.25rem 0.3125rem;
     background-color: rgba(219,226,232,0.25);
     background-size: cover;
+    flex-wrap: nowrap;
 
     &:hover {
       background-color: inherit;
@@ -261,10 +257,10 @@ $borderRadius: em(5px);
   span {
     white-space: nowrap;
     font-weight: bold;
+    margin-left: 0.925rem;
   }
 
-  span,
   img {
-    margin-right: em(7px);
+    width: em(26px);
   }
 }

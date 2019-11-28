@@ -1,7 +1,5 @@
 import './ResourceList.scss';
-import resourceImage from '../assets/resources-icon.svg';
-import closeImage from '../assets/close.svg';
-import readImage from '../assets/read.svg';
+import resourceImage from '@assets/resources-icon.svg';
 
 H5P = H5P || {};
 H5P.ResourceList = (function () {
@@ -25,10 +23,49 @@ H5P.ResourceList = (function () {
         },
     ];
 
+    const stripHTML = html => {
+        if (html) {
+            const elm = document.createElement('span');
+            elm.innerHTML = html;
+            return elm.textContent.trim();
+        }
+
+        return '';
+    };
+
+    const sanitizeParams = params => {
+
+        function handleObject(sourceObject) {
+            return Object.keys(sourceObject).reduce((aggregated, current) => {
+                aggregated[current] = stripHTML(sourceObject[current]);
+                return aggregated;
+            }, {})
+        }
+
+        const {
+            l10n,
+            resourceList,
+        } = params;
+
+        return {
+            ...params,
+            l10n: handleObject(l10n),
+            resourceList: resourceList.map(resource => {
+                const {
+                    title
+                } = resource;
+
+                return {
+                    ...resource,
+                    title: stripHTML(title),
+                };
+            }),
+        }
+    };
     function ResourceList(params, id, extra) {
         H5P.EventDispatcher.call(this);
 
-        this.params = params;
+        this.params = sanitizeParams(params);
         this.id = id;
 
         let wrapper, listContainer;
@@ -39,7 +76,7 @@ H5P.ResourceList = (function () {
             read: 'Read',
             resources: 'Resources',
             resourcesHeaderLogo: 'Resources logo',
-        }, params.l10n);
+        }, this.params.l10n);
 
 
         const createHeader = () => {

@@ -1,6 +1,8 @@
 import './ResourceList.scss';
 import resourceImage from '@assets/resources-icon.svg';
+import he from 'he';
 
+/*global H5P*/
 H5P = H5P || {};
 H5P.ResourceList = (function () {
 
@@ -24,13 +26,7 @@ H5P.ResourceList = (function () {
     ];
 
     const stripHTML = html => {
-        if (html) {
-            const elm = document.createElement('span');
-            elm.innerHTML = html;
-            return elm.textContent.trim();
-        }
-
-        return '';
+        return html ? he.decode(html) : '';
     };
 
     const sanitizeParams = params => {
@@ -62,7 +58,7 @@ H5P.ResourceList = (function () {
             }),
         }
     };
-    function ResourceList(params, id, extra) {
+    function ResourceList(params, id) {
         H5P.EventDispatcher.call(this);
 
         this.params = sanitizeParams(params);
@@ -89,7 +85,7 @@ H5P.ResourceList = (function () {
             headerImage.alt = this.l10n.resourcesHeaderLogo;
             wrapper.appendChild(headerImage);
 
-            const header = document.createElement('h1');
+            const header = document.createElement('h2');
             header.innerText = this.l10n.resources;
             wrapper.appendChild(header);
 
@@ -139,7 +135,7 @@ H5P.ResourceList = (function () {
                 listElement.appendChild(title);
 
                 const contentContainer = document.createElement('div');
-                if( resource.hasOwnProperty('introductionImage')){
+                if( resource.hasOwnProperty('introductionImage') && resource.introductionImage){
                     const image = document.createElement('img');
                     image.classList.add('h5p-resource-list-introduction-image');
                     image.role = 'presentation';
@@ -149,7 +145,7 @@ H5P.ResourceList = (function () {
                     contentContainer.appendChild(image);
                 }
 
-                if( resource.hasOwnProperty('introduction') ){
+                if( resource.hasOwnProperty('introduction') && resource.introduction ){
                     const introduction = document.createElement('p');
                     labelAnchor = 'intro_' + index;
                     introduction.innerHTML = resource.introduction;
@@ -159,7 +155,7 @@ H5P.ResourceList = (function () {
 
                 listElement.appendChild(contentContainer);
 
-                if( resource.hasOwnProperty('url')){
+                if( resource.hasOwnProperty('url') && resource.url){
                     const link = document.createElement('a');
                     link.target = '_blank';
                     link.classList.add('h5p-resource-list-link');
@@ -220,6 +216,7 @@ H5P.ResourceList = (function () {
             buttonContent.appendChild(readIcon);
 
             const button = document.createElement('button');
+            button.type = "button";
             button.onclick = this.onClick;
             button.className = 'h5p-resource-list-button';
             button.appendChild(buttonContent);
@@ -230,6 +227,7 @@ H5P.ResourceList = (function () {
 
             listContainer.appendChild(createHeader());
             listContainer.appendChild(createList(this.params.resourceList));
+            listContainer.classList.add('hidden');
 
             wrapper.appendChild(createBackground());
             wrapper.appendChild(listContainer);
@@ -241,6 +239,16 @@ H5P.ResourceList = (function () {
         this.onClick = event => this.toggleResources(event);
 
         this.toggleResources = event => {
+            const isActive = wrapper.classList.contains('h5p-resource-list-active');
+            if( !isActive ){
+                listContainer.classList.remove('hidden');
+                listContainer.classList.remove('slide-out');
+                listContainer.classList.add('slide-in');
+            } else {
+                listContainer.classList.remove('slide-in');
+                listContainer.classList.add('slide-out');
+                setTimeout(() => listContainer.classList.add('hidden'), 500);
+            }
             wrapper.classList.toggle('h5p-resource-list-active');
         };
 

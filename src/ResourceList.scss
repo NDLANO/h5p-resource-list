@@ -34,9 +34,9 @@ $activeColor: #1d53b8;
 $borderRadius: 5px;
 
 .h5p-resource-list-wrapper {
-  &.h5p-medium-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
-  &.h5p-large-tablet-size.h5p-resource-list-active .h5p-resource-list-container,
-  &.h5p-large-size.h5p-resource-list-active .h5p-resource-list-container
+  &.h5p-medium-tablet-size .h5p-resource-list-container,
+  &.h5p-large-tablet-size .h5p-resource-list-container,
+  &.h5p-large-size .h5p-resource-list-container
   {
     .h5p-resource-list-element {
       div {
@@ -56,22 +56,19 @@ $borderRadius: 5px;
     }
   }
 
-  &.h5p-medium-tablet-size.h5p-resource-list-active .h5p-resource-list-container {
+  &.h5p-medium-tablet-size .h5p-resource-list-container {
     width: 60%;
   }
 
-  &.h5p-large-tablet-size.h5p-resource-list-active .h5p-resource-list-container {
-    width: 40%;
-  }
-
-  &.h5p-large-size.h5p-resource-list-active .h5p-resource-list-container {
+  &.h5p-large-size .h5p-resource-list-container,
+  &.h5p-large-tablet-size .h5p-resource-list-container {
     width: 40%;
   }
 }
 
 .h5p-resource-list-bg {
   opacity: 0;
-  transition: opacity 150ms;
+  transition: opacity 250ms;
   background-color: black;
   position: absolute;
   top: 0;
@@ -83,19 +80,18 @@ $borderRadius: 5px;
 }
 
 .h5p-resource-list-container {
-  width: 0;
+  width: 95%;
   right: 0;
   top: 0;
   bottom: 0;
   position: absolute;
   background-color: $bgColor;
-  transition: width 150ms ease-in-out, visibility 150ms;
   z-index: 10;
   background-size: cover;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  visibility: hidden;
+  transform: translateX(100%);
 }
 
 .h5p-resource-list {
@@ -113,8 +109,8 @@ $borderRadius: 5px;
   }
 
   h2 {
-    margin: em(16px) 0 0 0;
-    font-size: em(16px);
+    margin: 1rem 0 0 0;
+    font-size: 1rem;
     @include addStates($textColor, $activeColor, true);
   }
 
@@ -210,16 +206,39 @@ $borderRadius: 5px;
   }
 }
 
-.h5p-resource-list-active {
-  .h5p-resource-list-container {
-    visibility: visible;
-    width: 90%;
-  }
+.h5p-resource-list-active .h5p-resource-list-bg {
+  opacity: 0.8;
+  visibility: visible;
+}
 
-  .h5p-resource-list-bg {
-    opacity: 0.8;
-    visibility: visible;
-  }
+.slide-in {
+  animation: slide-in 0.5s forwards;
+  -webkit-animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@-webkit-keyframes slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@-webkit-keyframes slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 
 .h5p-resource-list-button {

@@ -29,6 +29,26 @@ H5P.ResourceList = (function () {
         return html ? he.decode(html) : '';
     };
 
+    const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
+        if (e.keyCode === 9) {
+            if (e.shiftKey) {
+                if (document.activeElement === firstTabElement) {
+                    e.preventDefault();
+                    lastTabElement.focus();
+                }
+            }
+            else {
+                if (document.activeElement === lastTabElement) {
+                    e.preventDefault();
+                    firstTabElement.focus();
+                }
+            }
+        }
+        if (e.keyCode === 27) {
+            onClose();
+        }
+    };
+
     const sanitizeParams = params => {
 
         function handleObject(sourceObject) {
@@ -67,6 +87,9 @@ H5P.ResourceList = (function () {
         let wrapper, listContainer;
         this.container = null;
 
+        this.firstTabElement = [];
+        this.lastTabElement = [];
+
         this.l10n = Object.assign({
             hide: 'Hide',
             read: 'Read',
@@ -74,6 +97,7 @@ H5P.ResourceList = (function () {
             resourcesHeaderLogo: 'Resources logo',
         }, this.params.l10n);
 
+        const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
         const createHeader = () => {
             const wrapper = document.createElement('div');
@@ -135,6 +159,14 @@ H5P.ResourceList = (function () {
                 listElement.appendChild(title);
 
                 const contentContainer = document.createElement('div');
+                if( resource.hasOwnProperty('introduction') && resource.introduction ){
+                    const introduction = document.createElement('p');
+                    labelAnchor = 'intro_' + index;
+                    introduction.innerHTML = resource.introduction;
+                    introduction.id = labelAnchor;
+                    contentContainer.appendChild(introduction);
+                }
+
                 if( resource.hasOwnProperty('introductionImage') && resource.introductionImage){
                     const image = document.createElement('img');
                     image.classList.add('h5p-resource-list-introduction-image');
@@ -143,14 +175,6 @@ H5P.ResourceList = (function () {
                     image.alt = resource.title;
                     image.src = H5P.getPath(resource.introductionImage.path, this.id);
                     contentContainer.appendChild(image);
-                }
-
-                if( resource.hasOwnProperty('introduction') && resource.introduction ){
-                    const introduction = document.createElement('p');
-                    labelAnchor = 'intro_' + index;
-                    introduction.innerHTML = resource.introduction;
-                    introduction.id = labelAnchor;
-                    contentContainer.appendChild(introduction);
                 }
 
                 listElement.appendChild(contentContainer);
@@ -241,10 +265,13 @@ H5P.ResourceList = (function () {
         this.toggleResources = event => {
             const isActive = wrapper.classList.contains('h5p-resource-list-active');
             if( !isActive ){
+                const focusableElements = Array.from(listContainer.querySelectorAll(focusableElementsString));
+                wrapper.onkeydown = event => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources);
                 listContainer.classList.remove('hidden');
                 listContainer.classList.remove('slide-out');
                 listContainer.classList.add('slide-in');
             } else {
+                wrapper.onkeydown = () => {};
                 listContainer.classList.remove('slide-in');
                 listContainer.classList.add('slide-out');
                 setTimeout(() => listContainer.classList.add('hidden'), 500);

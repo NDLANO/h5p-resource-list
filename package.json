@@ -15,21 +15,21 @@
   "license": "MIT",
   "contributors": [],
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/plugin-transform-arrow-functions": "^7.7.4",
-    "@babel/preset-env": "^7.7.6",
-    "babel-loader": "^8.0.4",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-arrow-functions": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
     "css-loader": "^2.1.0",
     "he": "^1.2.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "resolve-url-loader": "^3.1.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {}
 }

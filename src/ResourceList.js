@@ -6,29 +6,22 @@ import he from 'he';
 H5P = H5P || {};
 H5P.ResourceList = (function () {
 
-    const breakPoints = [
-        {
-            "className": "h5p-phone-size",
-            "shouldAdd": width => width <= 480
-        },
-        {
-            "className": "h5p-medium-tablet-size",
-            "shouldAdd": width => width > 480 && width < 768
-        },
-        {
-            "className": "h5p-large-tablet-size",
-            "shouldAdd": width => width >= 768 && width < 1024
-        },
-        {
-            "className": "h5p-large-size",
-            "shouldAdd": width => width >= 1024
-        },
-    ];
-
+    /**
+     * Strip HTML from text
+     * @param html
+     * @return {*}
+     */
     const stripHTML = html => {
         return html ? he.decode(html) : '';
     };
 
+    /**
+     * Trap keys so that the user can't tab outside the container
+     * @param e
+     * @param firstTabElement
+     * @param lastTabElement
+     * @param onClose
+     */
     const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
         if (e.keyCode === 9) {
             if (e.shiftKey) {
@@ -49,6 +42,12 @@ H5P.ResourceList = (function () {
         }
     };
 
+    /**
+     * Make sure that parameters are valid
+     *
+     * @param params
+     * @return {object}
+     */
     const sanitizeParams = params => {
 
         function handleObject(sourceObject) {
@@ -78,6 +77,13 @@ H5P.ResourceList = (function () {
             }),
         }
     };
+
+    /**
+     * Create the resource list
+     * @param params
+     * @param id
+     * @constructor
+     */
     function ResourceList(params, id) {
         H5P.EventDispatcher.call(this);
 
@@ -86,9 +92,11 @@ H5P.ResourceList = (function () {
 
         let wrapper, listContainer;
         this.container = null;
+        this.currentRatio = null;
 
-        this.firstTabElement = [];
-        this.lastTabElement = [];
+        this.mediumTabletSurface = 'h5p-resource-list-medium-tablet';
+        this.largeTabletSurface = 'h5p-resource-list-large-tablet';
+        this.largeSurface = 'h5p-resource-list-large';
 
         this.l10n = Object.assign({
             hide: 'Hide',
@@ -99,6 +107,10 @@ H5P.ResourceList = (function () {
 
         const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
+        /**
+         * Create the header for the list
+         * @return {HTMLDivElement}
+         */
         const createHeader = () => {
             const wrapper = document.createElement('div');
             wrapper.classList.add('h5p-resource-list-header');
@@ -132,6 +144,10 @@ H5P.ResourceList = (function () {
             return wrapper;
         };
 
+        /**
+         * Create background to make a modal look of the list
+         * @return {HTMLDivElement}
+         */
         const createBackground = () => {
             const listBackground = document.createElement('div');
             listBackground.classList.add('h5p-resource-list-bg');
@@ -140,6 +156,12 @@ H5P.ResourceList = (function () {
             return listBackground;
         };
 
+        /**
+         * Create the resource list
+         *
+         * @param {Array} resources
+         * @return {HTMLUListElement}
+         */
         const createList = resources => {
             const resourceList = document.createElement('ul');
             resourceList.classList.add('h5p-resource-list');
@@ -200,24 +222,21 @@ H5P.ResourceList = (function () {
             return resourceList;
         };
 
-        this.getRect = () => {
-            return this.container.getBoundingClientRect();
-        };
-
+        /**
+         * Resize the list when the size changes
+         */
         this.resize = () => {
             if( !wrapper){
                 return;
             }
-            const rect = this.getRect();
-            breakPoints.forEach(item => {
-                if (item.shouldAdd(rect.width)) {
-                    wrapper.classList.add(item.className);
-                } else {
-                    wrapper.classList.remove(item.className);
-                }
-            });
+
+            this.setWrapperClassFromRatio(wrapper);
         };
 
+        /**
+         *
+         * @param {HTMLElement} $container
+         */
         this.attach = $container => {
             this.container = $container;
 
@@ -262,6 +281,10 @@ H5P.ResourceList = (function () {
 
         this.onClick = event => this.toggleResources(event);
 
+        /**
+         * Toggle display of resource list
+         * @param event
+         */
         this.toggleResources = event => {
             const isActive = wrapper.classList.contains('h5p-resource-list-active');
             if( !isActive ){
@@ -277,6 +300,58 @@ H5P.ResourceList = (function () {
                 setTimeout(() => listContainer.classList.add('hidden'), 500);
             }
             wrapper.classList.toggle('h5p-resource-list-active');
+        };
+
+        /**
+         * Get the ratio of the container
+         *
+         * @return {number}
+         */
+        this.getRatio = () => {
+            const computedStyles = window.getComputedStyle(this.container);
+            return this.container.offsetWidth / parseFloat(computedStyles.getPropertyValue('font-size'));
+        }
+
+        /**
+         * Add/remove classname based on the ratio
+         * @param wrapper
+         * @param {number} ratio
+         */
+        this.setWrapperClassFromRatio = (wrapper, ratio = this.getRatio()) => {
+            if ( ratio === this.currentRatio) {
+                return;
+            }
+            this.breakpoints().forEach(item => {
+                if (item.shouldAdd(ratio)) {
+                    wrapper.classList.add(item.className);
+                }
+                else {
+                    wrapper.classList.remove(item.className);
+                }
+            });
+            this.currentRatio = ratio;
+        };
+
+        /**
+         * Get list of classname and conditions for when to add the classname to the content type
+         *
+         * @return {[{className: string, shouldAdd: (function(*): boolean)}, {className: string, shouldAdd: (function(*): boolean|boolean)}, {className: string, shouldAdd: (function(*): boolean)}]}
+         */
+        this.breakpoints = () => {
+            return [
+                {
+                    "className": this.mediumTabletSurface,
+                    "shouldAdd": ratio => ratio >= 22 && ratio < 42,
+                },
+                {
+                    "className": this.largeTabletSurface,
+                    "shouldAdd": ratio => ratio >= 42 && ratio < 60,
+                },
+                {
+                    "className": this.largeSurface,
+                    "shouldAdd": ratio => ratio >= 60,
+                },
+            ];
         };
 
         H5P.$window.on('resize', this.resize.bind(this));

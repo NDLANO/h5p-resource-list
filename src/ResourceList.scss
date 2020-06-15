@@ -34,9 +34,8 @@ $activeColor: #1d53b8;
 $borderRadius: 5px;
 
 .h5p-resource-list-wrapper {
-  &.h5p-medium-tablet-size .h5p-resource-list-container,
-  &.h5p-large-tablet-size .h5p-resource-list-container,
-  &.h5p-large-size .h5p-resource-list-container
+  &.h5p-resource-list-large-tablet .h5p-resource-list-container,
+  &.h5p-resource-list-large .h5p-resource-list-container
   {
     .h5p-resource-list-element {
       div {
@@ -56,12 +55,15 @@ $borderRadius: 5px;
     }
   }
 
-  &.h5p-medium-tablet-size .h5p-resource-list-container {
+  &.h5p-resource-list-medium-tablet .h5p-resource-list-container {
+    width: 80%;
+  }
+
+  &.h5p-resource-list-large-tablet .h5p-resource-list-container {
     width: 60%;
   }
 
-  &.h5p-large-size .h5p-resource-list-container,
-  &.h5p-large-tablet-size .h5p-resource-list-container {
+  &.h5p-resource-list-large .h5p-resource-list-container {
     width: 40%;
   }
 }
@@ -116,7 +118,7 @@ $borderRadius: 5px;
 
   div {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin-top: 1rem;
   }
 

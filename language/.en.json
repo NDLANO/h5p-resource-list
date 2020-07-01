@@ -41,6 +41,10 @@
         {
           "label": "Translation for \"Resources\"",
           "default": "Resources"
+        },
+        {
+          "label": "Accessibility for the \"Resources\" button",
+          "default": "See additional resources to get more information"
         }
       ]
     }

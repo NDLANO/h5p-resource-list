@@ -1,15 +1,19 @@
 $browser-context: 16;
 
-@function em($pixels, $context: $browser-context) {
-  @if (unitless($pixels)) {
-    $pixels: $pixels * 1px;
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function _strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
   }
 
-  @if (unitless($context)) {
-    $context: $context * 1px;
-  }
+  @return $number;
+}
 
-  @return $pixels / $context * 1em;
+@function pxToRem($value){
+  $value: _strip-unit($value);
+  @return $value / $browser-context * 1rem;
 }
 
 @mixin addStates($textColor, $activeColor, $useUnderline: false ) {
@@ -43,7 +47,7 @@ $borderRadius: 5px;
       }
 
       .h5p-resource-list-introduction-image {
-        max-width: em(90px);
+        max-width: pxToRem(90px);
         margin-left: 0.8rem;
         align-self: flex-start;
       }
@@ -124,7 +128,7 @@ $borderRadius: 5px;
 
   p {
     color: initial;
-    line-height: em(28px);
+    line-height: pxToRem(28px);
     font-size: 0.9rem;
     margin: 0;
     flex: auto;
@@ -145,7 +149,7 @@ $borderRadius: 5px;
   display: flex;
   align-items: center;
   box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
-  min-height: em(64px);
+  min-height: pxToRem(64px);
   padding: 0.5rem 1rem;
 
   h1 {
@@ -281,6 +285,6 @@ $borderRadius: 5px;
   }
 
   img {
-    width: em(26px);
+    width: pxToRem(26px);
   }
 }

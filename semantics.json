@@ -74,6 +74,12 @@
         "type": "text",
         "label": "Translation for \"Resources\"",
         "default": "Resources"
+      },
+      {
+        "name": "resourcesLabel",
+        "type": "text",
+        "label": "Accessibility for the \"Resources\" button",
+        "default": "See additional resources to get more information"
       }
     ]
   }

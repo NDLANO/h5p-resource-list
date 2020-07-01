@@ -41,6 +41,10 @@
         {
           "label": "Oversettelse for  \"Ressurser\"",
           "default": "Ressurser"
+        },
+        {
+          "label": "Tilgjengelighet for \"Resources\" knappen",
+          "default": "Se tilleggsressurser for å få mer informasjon"
         }
       ]
     }

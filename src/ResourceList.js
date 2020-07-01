@@ -240,7 +240,7 @@ H5P.ResourceList = (function () {
         this.attach = $container => {
             this.container = $container;
 
-            wrapper = document.createElement('div');
+            wrapper = document.createElement('p');
             wrapper.classList.add('h5p-resource-list-wrapper');
 
             const buttonContent = document.createElement('div');
@@ -263,6 +263,7 @@ H5P.ResourceList = (function () {
             button.onclick = this.onClick;
             button.className = 'h5p-resource-list-button';
             button.appendChild(buttonContent);
+            button.setAttribute('aria-label', "See additional resources to get more information.");
             wrapper.appendChild(button);
 
             listContainer = document.createElement('div');

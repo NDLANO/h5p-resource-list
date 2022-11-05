@@ -1,9 +1,10 @@
 const path = require('path');
-const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = (nodeEnv !== 'production');
 const config = {
+  mode: nodeEnv,
   entry: {
     dist: './src/ResourceList.js'
   },
@@ -11,14 +12,19 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'h5p-resource-list.js'
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'h5p-resource-list.css'
+    })
+  ],
   resolve: {
-      modules: [
-          path.resolve(__dirname, 'src'),
-          'node_modules'
-      ],
-      alias: {
-        '@assets': path.resolve(__dirname, 'assets/')
-      }
+    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules'
+    ],
+    alias: {
+      '@assets': path.resolve(__dirname, 'assets/')
+    }
   },
   module: {
     rules: [
@@ -31,9 +37,22 @@ const config = {
         },
       },
       {
-        test:/\.(s*)css$/,
+        test: /\.(s[ac]ss|css)$/,
         include: path.resolve(__dirname, 'src'),
-        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: ''
+            }
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
@@ -41,7 +60,7 @@ const config = {
           path.resolve(__dirname, 'src'),
           path.resolve(__dirname, 'assets'),
         ],
-        loader: 'url-loader?limit=100000'
+        type: 'asset/resource'
       }
     ]
   }

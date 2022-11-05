@@ -20,6 +20,11 @@
       "path": "dist/h5p-resource-list.js"
     }
   ],
+  "preloadedCss": [
+    {
+      "path": "dist/h5p-resource-list.css"
+    }
+  ],
   "editorDependencies": [
     {
       "machineName": "H5PEditor.VerticalTabs",

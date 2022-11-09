@@ -3,7 +3,7 @@
   "description": "Add links to resources for 'Further reading'",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 13,
+  "patchVersion": 14,
   "runnable": 0,
   "author": "NDLA",
   "license": "MIT",
@@ -18,6 +18,11 @@
   "preloadedJs": [
     {
       "path": "dist/h5p-resource-list.js"
+    }
+  ],
+  "preloadedCss": [
+    {
+      "path": "dist/h5p-resource-list.css"
     }
   ],
   "editorDependencies": [

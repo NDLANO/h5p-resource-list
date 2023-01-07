@@ -114,9 +114,8 @@ H5P.ResourceList = (function () {
       wrapper.classList.add('h5p-resource-list-header');
 
       const headerImage =  document.createElement('img');
-      headerImage.setAttribute('aria-hidden', true);
       headerImage.src = resourceImage;
-      headerImage.alt = this.l10n.resourcesHeaderLogo;
+      headerImage.alt = ''; // Merely decorational
       wrapper.appendChild(headerImage);
 
       const header = document.createElement('h2');
@@ -134,7 +133,6 @@ H5P.ResourceList = (function () {
       hideContainer.appendChild(buttonText);
 
       const hideIcon = document.createElement('span');
-      hideIcon.setAttribute('aria-hidden', true);
       hideIcon.className = "fa fa-close";
       hideContainer.appendChild(hideIcon);
 
@@ -208,7 +206,6 @@ H5P.ResourceList = (function () {
           link.setAttribute('aria-labelledby', labelAnchor);
 
           const readIcon = document.createElement('span');
-          readIcon.setAttribute('aria-hidden', true);
           readIcon.className = 'fa fa-arrow-right';
           link.appendChild(readIcon);
 
@@ -243,7 +240,7 @@ H5P.ResourceList = (function () {
 
       const buttonContent = document.createElement('div');
       const headerIcon = document.createElement('img');
-      headerIcon.setAttribute('aria-hidden', true);
+      headerIcon.alt = ''; // Merely decorational
       headerIcon.src = resourceImage;
       buttonContent.appendChild(headerIcon);
 
@@ -252,7 +249,6 @@ H5P.ResourceList = (function () {
       buttonContent.appendChild(buttonText);
 
       const readIcon = document.createElement('span');
-      readIcon.setAttribute('aria-hidden', true);
       readIcon.className = "fa fa-arrow-right";
       buttonContent.appendChild(readIcon);
 

@@ -118,7 +118,8 @@ H5P.ResourceList = (function () {
       headerImage.alt = ''; // Merely decorational
       wrapper.appendChild(headerImage);
 
-      const header = document.createElement('h2');
+      const header = document.createElement('div');
+      header.classList.add('h2');
       header.innerText = this.l10n.resources;
       wrapper.appendChild(header);
 
@@ -170,7 +171,8 @@ H5P.ResourceList = (function () {
         listElement.classList.add('h5p-resource-list-element');
         listElement.setAttribute('role', 'article');
 
-        const title = document.createElement('h2');
+        const title = document.createElement('div');
+        title.classList.add('h2');
         let labelAnchor = "title_" + index;
         title.id = labelAnchor;
         title.textContent = resource.title;

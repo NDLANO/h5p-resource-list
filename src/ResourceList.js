@@ -134,7 +134,7 @@ H5P.ResourceList = (function () {
       hideContainer.appendChild(buttonText);
 
       const hideIcon = document.createElement('span');
-      hideIcon.className = "fa fa-close";
+      hideIcon.className = 'fa fa-close';
       hideContainer.appendChild(hideIcon);
 
       wrapper.appendChild(hideContainer);
@@ -173,7 +173,7 @@ H5P.ResourceList = (function () {
 
         const title = document.createElement('div');
         title.classList.add('h2');
-        let labelAnchor = "title_" + index;
+        let labelAnchor = 'title_' + index;
         title.id = labelAnchor;
         title.textContent = resource.title;
         listElement.appendChild(title);
@@ -251,15 +251,15 @@ H5P.ResourceList = (function () {
       buttonContent.appendChild(buttonText);
 
       const readIcon = document.createElement('span');
-      readIcon.className = "fa fa-arrow-right";
+      readIcon.className = 'fa fa-arrow-right';
       buttonContent.appendChild(readIcon);
 
       const button = document.createElement('button');
-      button.type = "button";
+      button.type = 'button';
       button.onclick = this.onClick;
       button.className = 'h5p-resource-list-button';
       button.appendChild(buttonContent);
-      button.setAttribute('aria-label', "See additional resources to get more information.");
+      button.setAttribute('aria-label', 'See additional resources to get more information.');
       wrapper.appendChild(button);
 
       listContainer = document.createElement('div');
@@ -338,16 +338,16 @@ H5P.ResourceList = (function () {
     this.breakpoints = () => {
       return [
         {
-          "className": this.mediumTabletSurface,
-          "shouldAdd": (ratio) => ratio >= 22 && ratio < 42,
+          'className': this.mediumTabletSurface,
+          'shouldAdd': (ratio) => ratio >= 22 && ratio < 42,
         },
         {
-          "className": this.largeTabletSurface,
-          "shouldAdd": (ratio) => ratio >= 42 && ratio < 60,
+          'className': this.largeTabletSurface,
+          'shouldAdd': (ratio) => ratio >= 42 && ratio < 60,
         },
         {
-          "className": this.largeSurface,
-          "shouldAdd": (ratio) => ratio >= 60,
+          'className': this.largeSurface,
+          'shouldAdd': (ratio) => ratio >= 60,
         },
       ];
     };

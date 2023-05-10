@@ -1,20 +1,24 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const nodeEnv = process.env.NODE_ENV || 'development';
-const isDev = (nodeEnv !== 'production');
-const config = {
-  mode: nodeEnv,
+const mode = process.argv.includes('--mode=production') ?
+  'production' : 'development';
+const libraryName = process.env.npm_package_name;
+
+module.exports = {
+  mode: mode === 'production',
   entry: {
     dist: './src/ResourceList.js'
   },
   output: {
+    filename: `${libraryName}.js`,
     path: path.resolve(__dirname, 'dist'),
-    filename: 'h5p-resource-list.js'
+    clean: true
   },
+  target: ['browserslist'],
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'h5p-resource-list.css'
+      filename: `${libraryName}.css`
     })
   ],
   resolve: {
@@ -63,11 +67,6 @@ const config = {
         type: 'asset/resource'
       }
     ]
-  }
+  },
+  ...(mode !== 'production' && { devtool: 'eval-cheap-module-source-map' })
 };
-
-if (isDev) {
-  config.devtool = 'inline-source-map';
-}
-
-module.exports = config;

@@ -100,7 +100,7 @@ H5P.ResourceList = (function () {
       hide: 'Hide',
       read: 'Read',
       resources: 'Resources',
-      resourcesHeaderLogo: 'Resources logo',
+      resourcesLabel: 'See additional resources to get more information',
     }, this.params.l10n);
 
     const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
@@ -259,7 +259,7 @@ H5P.ResourceList = (function () {
       button.onclick = this.onClick;
       button.className = 'h5p-resource-list-button';
       button.appendChild(buttonContent);
-      button.setAttribute('aria-label', 'See additional resources to get more information.');
+      button.setAttribute('aria-label', this.l10n.resourcesLabel);
       wrapper.appendChild(button);
 
       listContainer = document.createElement('div');

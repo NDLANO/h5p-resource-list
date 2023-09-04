@@ -9,7 +9,7 @@ H5P.ResourceList = (function () {
    * @param html
    * @return {*}
    */
-  const stripHTML = (html) => {
+  const decodeHTML = (html) => {
     return html ? he.decode(html) : '';
   };
 
@@ -50,7 +50,7 @@ H5P.ResourceList = (function () {
 
     function handleObject(sourceObject) {
       return Object.keys(sourceObject).reduce((aggregated, current) => {
-        aggregated[current] = stripHTML(sourceObject[current]);
+        aggregated[current] = decodeHTML(sourceObject[current]);
         return aggregated;
       }, {});
     }
@@ -70,7 +70,7 @@ H5P.ResourceList = (function () {
 
         return {
           ...resource,
-          title: stripHTML(title),
+          title: decodeHTML(title),
         };
       }),
     };

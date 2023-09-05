@@ -1,9 +1,10 @@
 import he from 'he';
 
 /**
- * Strip HTML from text
- * @param html
- * @return {*} Plain text 
+ * Decode HTML from text
+ * 
+ * @param {string} html
+ * @return {string} Plain text 
  */
 const decodeHTML = (html) => {
   return html ? he.decode(html) : '';
@@ -11,10 +12,11 @@ const decodeHTML = (html) => {
 
 /**
  * Trap keys so that the user can't tab outside the container
- * @param e
- * @param firstTabElement
- * @param lastTabElement
- * @param onClose
+ * 
+ * @param {object} e - The event object
+ * @param {object} firstTabElement - The first tab element
+ * @param {object} lastTabElement - The last tab element
+ * @param {function} onClose - The function to run when the ESC key is pressed
  */
 export const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
   if (e.keyCode === 9) {
@@ -39,8 +41,8 @@ export const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
 /**
  * Make sure that parameters are valid
  * 
- * @param params
- * @return {object}
+ * @param {object} params
+ * @return {object} Sanitized params
  */
 export const sanitizeParams = (params) => {
   function handleObject(sourceObject) {

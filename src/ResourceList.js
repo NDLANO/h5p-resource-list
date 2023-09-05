@@ -6,12 +6,11 @@ class ResourceList extends H5P.EventDispatcher {
   /**
    * @constructor
    * 
-   * @param params
-   * @param id
+   * @param {object} params
+   * @param {number} id
    */
   constructor(params, id) {
     super();
-    H5P.EventDispatcher.call(this);
 
     this.params = sanitizeParams(params);
     this.id = id;
@@ -35,7 +34,7 @@ class ResourceList extends H5P.EventDispatcher {
 
     /**
      * Create the header for the list
-     * @return {HTMLDivElement}
+     * @return {HTMLDivElement} Header element
      */
     const createHeader = () => {
       const wrapper = document.createElement('div');
@@ -71,7 +70,7 @@ class ResourceList extends H5P.EventDispatcher {
 
     /**
      * Create background to make a modal look of the list
-     * @return {HTMLDivElement}
+     * @return {HTMLDivElement} Background element
      */
     const createBackground = () => {
       const listBackground = document.createElement('div');
@@ -85,7 +84,7 @@ class ResourceList extends H5P.EventDispatcher {
      * Create the resource list
      *
      * @param {Array} resources
-     * @return {HTMLUListElement}
+     * @return {HTMLUListElement} List of resources as HTML element
      */
     const createList = (resources) => {
       const resourceList = document.createElement('ul');
@@ -159,8 +158,8 @@ class ResourceList extends H5P.EventDispatcher {
     };
 
     /**
-     *
-     * @param {HTMLElement} $container
+     * Attach wrapper with resource list to container
+     * @param {jQuery} $container
      */
     this.attach = ($container) => {
       this.container = $container;
@@ -240,7 +239,7 @@ class ResourceList extends H5P.EventDispatcher {
 
     /**
      * Add/remove classname based on the ratio
-     * @param wrapper
+     * @param {HTMLElement} wrapper
      * @param {number} ratio
      */
     this.setWrapperClassFromRatio = (wrapper, ratio = this.getRatio()) => {
@@ -280,6 +279,9 @@ class ResourceList extends H5P.EventDispatcher {
       ];
     };
 
+    /**
+     * Handle resize events
+     */
     this.on('resize', () => {
       this.resize.bind(this);
     });

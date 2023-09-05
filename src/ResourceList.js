@@ -1,88 +1,16 @@
 import './ResourceList.scss';
 import resourceImage from '@assets/resources-icon.svg';
-import he from 'he';
+import { trapKeys, sanitizeParams } from './utils';
 
-H5P.ResourceList = (function () {
-
+class ResourceList extends H5P.EventDispatcher {
   /**
-   * Strip HTML from text
-   * @param html
-   * @return {*}
-   */
-  const decodeHTML = (html) => {
-    return html ? he.decode(html) : '';
-  };
-
-  /**
-   * Trap keys so that the user can't tab outside the container
-   * @param e
-   * @param firstTabElement
-   * @param lastTabElement
-   * @param onClose
-   */
-  const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
-    if (e.keyCode === 9) {
-      if (e.shiftKey) {
-        if (document.activeElement === firstTabElement) {
-          e.preventDefault();
-          lastTabElement.focus();
-        }
-      }
-      else {
-        if (document.activeElement === lastTabElement) {
-          e.preventDefault();
-          firstTabElement.focus();
-        }
-      }
-    }
-    if (e.keyCode === 27) {
-      onClose();
-    }
-  };
-
-  /**
-   * Make sure that parameters are valid
-   *
+   * @constructor
+   * 
    * @param params
-   * @return {object}
+   * @param id
    */
-  const sanitizeParams = (params) => {
-
-    function handleObject(sourceObject) {
-      return Object.keys(sourceObject).reduce((aggregated, current) => {
-        aggregated[current] = decodeHTML(sourceObject[current]);
-        return aggregated;
-      }, {});
-    }
-
-    const {
-      l10n,
-      resourceList,
-    } = params;
-
-    return {
-      ...params,
-      l10n: handleObject(l10n),
-      resourceList: resourceList.map((resource) => {
-        const {
-          title
-        } = resource;
-
-        return {
-          ...resource,
-          title: decodeHTML(title),
-        };
-      }),
-    };
-  };
-
-  /**
-     * Create the resource list
-     * @param params
-     * @param id
-     * @constructor
-     */
-  function ResourceList(params, id) {
+  constructor(params, id) {
+    super();
     H5P.EventDispatcher.call(this);
 
     this.params = sanitizeParams(params);
@@ -113,7 +41,7 @@ H5P.ResourceList = (function () {
       const wrapper = document.createElement('div');
       wrapper.classList.add('h5p-resource-list-header');
 
-      const headerImage =  document.createElement('img');
+      const headerImage = document.createElement('img');
       headerImage.src = resourceImage;
       headerImage.alt = ''; // Merely decorational
       wrapper.appendChild(headerImage);
@@ -223,7 +151,7 @@ H5P.ResourceList = (function () {
      * Resize the list when the size changes
      */
     this.resize = () => {
-      if ( !wrapper) {
+      if (!wrapper) {
         return;
       }
 
@@ -284,7 +212,7 @@ H5P.ResourceList = (function () {
      */
     this.toggleResources = () => {
       const isActive = wrapper.classList.contains('h5p-resource-list-active');
-      if ( !isActive ) {
+      if (!isActive) {
         const focusableElements = Array.from(listContainer.querySelectorAll(focusableElementsString));
         wrapper.onkeydown = (event) => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources);
         listContainer.classList.remove('hidden');
@@ -292,7 +220,7 @@ H5P.ResourceList = (function () {
         listContainer.classList.add('slide-in');
       }
       else {
-        wrapper.onkeydown = () => {};
+        wrapper.onkeydown = () => { };
         listContainer.classList.remove('slide-in');
         listContainer.classList.add('slide-out');
         setTimeout(() => listContainer.classList.add('hidden'), 500);
@@ -303,7 +231,7 @@ H5P.ResourceList = (function () {
     /**
      * Get the ratio of the container
      *
-     * @return {number}
+     * @return {number} Ratio of container width / font size
      */
     this.getRatio = () => {
       const computedStyles = window.getComputedStyle(this.container);
@@ -316,7 +244,7 @@ H5P.ResourceList = (function () {
      * @param {number} ratio
      */
     this.setWrapperClassFromRatio = (wrapper, ratio = this.getRatio()) => {
-      if ( ratio === this.currentRatio) {
+      if (ratio === this.currentRatio) {
         return;
       }
       this.breakpoints().forEach((item) => {
@@ -356,10 +284,6 @@ H5P.ResourceList = (function () {
       this.resize.bind(this);
     });
   }
+}
 
-  // Inherit prototype properties
-  ResourceList.prototype = Object.create(H5P.EventDispatcher.prototype);
-  ResourceList.prototype.constructor = ResourceList;
-
-  return ResourceList;
-})();
+H5P.ResourceList = ResourceList;

@@ -13,13 +13,13 @@ const decodeHTML = (html) => {
 /**
  * Trap keys so that the user can't tab outside the container
  * 
- * @param {object} e - The event object
- * @param {object} firstTabElement - The first tab element
- * @param {object} lastTabElement - The last tab element
- * @param {function} onClose - The function to run when the ESC key is pressed
+ * @param {KeyboardEvent} e - The keyboard event
+ * @param {HTMLElement} firstTabElement - The first tab element
+ * @param {HTMLElement} lastTabElement - The last tab element
+ * @param {() => void} onClose - Close callback when pressing escape
  */
 export const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
-  if (e.keyCode === 9) {
+  if (e.key === 'Tab') {
     if (e.shiftKey) {
       if (document.activeElement === firstTabElement) {
         e.preventDefault();
@@ -33,7 +33,7 @@ export const trapKeys = (e, firstTabElement, lastTabElement, onClose) => {
       }
     }
   }
-  if (e.keyCode === 27) {
+  if (e.key === 'Escape') {
     onClose();
   }
 };

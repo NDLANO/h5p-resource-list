@@ -13,11 +13,19 @@ $browser-context: 16;
   @return $number;
 }
 
+/// Convert px to rem
+/// @param {Number} $value - Number to convert
+/// @return {Number} - Converted number
 @function pxToRem($value){
   $value: _strip-unit($value);
   @return math.div($value, $browser-context) * 1rem;
 }
 
+/// Add states to a selector
+/// @param {String} $textColor - Text color
+/// @param {String} $activeColor - Active color
+/// @param {Boolean} $useUnderline - Use underline on hover
+/// @return {String} - CSS
 @mixin addStates($textColor, $activeColor, $useUnderline: false ) {
   color: $textColor;
   text-decoration: none;
@@ -116,7 +124,7 @@ $borderRadius: 5px;
     @include addStates($textColor, $activeColor);
   }
 
-  .h2 {
+  .h5p-resource-list-title {
     margin: 1rem 0 0 0;
     font-size: 1rem;
     @include addStates($textColor, $activeColor, true);
@@ -154,7 +162,7 @@ $borderRadius: 5px;
   min-height: pxToRem(64px);
   padding: 0.5rem 1rem;
 
-  .h2 {
+  .h5p-resource-list-header-text {
     display: block;
     font-size: 1.5em;
     margin-block-start: 0.83em;

@@ -46,7 +46,7 @@ class ResourceList extends H5P.EventDispatcher {
       wrapper.appendChild(headerImage);
 
       const header = document.createElement('div');
-      header.classList.add('h2');
+      header.classList.add('h5p-resource-list-header-text');
       header.innerText = this.l10n.resources;
       wrapper.appendChild(header);
 
@@ -99,7 +99,7 @@ class ResourceList extends H5P.EventDispatcher {
         listElement.setAttribute('role', 'article');
 
         const title = document.createElement('div');
-        title.classList.add('h2');
+        title.classList.add('h5p-resource-list-title');
         let labelAnchor = 'title_' + index;
         title.id = labelAnchor;
         title.textContent = resource.title;

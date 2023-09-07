@@ -41,6 +41,7 @@ class ResourceList extends H5P.EventDispatcher {
       wrapper.classList.add('h5p-resource-list-header');
 
       const headerImage = document.createElement('img');
+      headerImage.className = 'h5p-resource-list-header-image';
       headerImage.src = resourceImage;
       headerImage.alt = ''; // Merely decorational
       wrapper.appendChild(headerImage);
@@ -56,6 +57,7 @@ class ResourceList extends H5P.EventDispatcher {
       hideContainer.setAttribute('aria-labelledby', 'hideButton');
 
       const buttonText = document.createElement('span');
+      buttonText.className = 'h5p-resource-list-hide-text';
       buttonText.id = 'hideButton';
       buttonText.innerText = this.l10n.hide;
       hideContainer.appendChild(buttonText);
@@ -106,9 +108,12 @@ class ResourceList extends H5P.EventDispatcher {
         listElement.appendChild(title);
 
         const contentContainer = document.createElement('div');
+        contentContainer.className = 'h5p-resource-list-content';
+
         if (resource.introduction && resource.introduction) {
           const introduction = document.createElement('p');
           labelAnchor = 'intro_' + index;
+          introduction.className = 'h5p-resource-list-introduction';
           introduction.innerHTML = resource.introduction;
           introduction.id = labelAnchor;
           contentContainer.appendChild(introduction);
@@ -168,12 +173,16 @@ class ResourceList extends H5P.EventDispatcher {
       wrapper.classList.add('h5p-resource-list-wrapper');
 
       const buttonContent = document.createElement('div');
+      buttonContent.className = 'h5p-resource-list-button-content';
+
       const headerIcon = document.createElement('img');
+      headerIcon.className = 'h5p-resource-list-button-image';
       headerIcon.alt = ''; // Merely decorational
       headerIcon.src = resourceImage;
       buttonContent.appendChild(headerIcon);
 
       const buttonText = document.createElement('span');
+      buttonText.className = 'h5p-resource-list-button-text';
       buttonText.innerText = this.l10n.resources;
       buttonContent.appendChild(buttonText);
 

@@ -136,7 +136,7 @@ $borderRadius: 5px;
     margin-top: 1rem;
   }
 
-  p {
+  .h5p-resource-list-introduction {
     color: initial;
     line-height: pxToRem(28px);
     font-size: 0.9rem;
@@ -172,7 +172,7 @@ $borderRadius: 5px;
     font-weight: bold;
   }
 
-  & > img {
+  & > .h5p-resource-list-header-image {
     height: auto;
   }
 }
@@ -276,7 +276,7 @@ $borderRadius: 5px;
     border-color: #1d53b8;
   }
 
-  div {
+  .h5p-resource-list-button-content {
     display: flex;
     align-items: center;
     border-radius: inherit;
@@ -299,7 +299,7 @@ $borderRadius: 5px;
     margin-left: 0.925rem;
   }
 
-  img {
+  .h5p-resource-list-button-image {
     width: pxToRem(26px);
   }
 }

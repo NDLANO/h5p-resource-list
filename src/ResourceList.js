@@ -51,7 +51,7 @@ class ResourceList extends H5P.EventDispatcher {
       wrapper.appendChild(header);
 
       const hideContainer = document.createElement('button');
-      hideContainer.onclick = this.onClick;
+      hideContainer.addEventListener('click', this.toggleResources.bind(this));
       hideContainer.classList.add('h5p-resource-list-hide');
       hideContainer.setAttribute('aria-labelledby', 'hideButton');
 
@@ -75,7 +75,7 @@ class ResourceList extends H5P.EventDispatcher {
     const createBackground = () => {
       const listBackground = document.createElement('div');
       listBackground.classList.add('h5p-resource-list-bg');
-      listBackground.onclick = this.onClick;
+      listBackground.addEventListener('click', this.toggleResources.bind(this));
 
       return listBackground;
     };
@@ -183,7 +183,7 @@ class ResourceList extends H5P.EventDispatcher {
 
       const button = document.createElement('button');
       button.type = 'button';
-      button.onclick = this.onClick;
+      button.addEventListener('click', this.toggleResources.bind(this));
       button.className = 'h5p-resource-list-button';
       button.appendChild(buttonContent);
       button.setAttribute('aria-label', this.l10n.resourcesLabel);
@@ -202,8 +202,6 @@ class ResourceList extends H5P.EventDispatcher {
       this.container.appendChild(wrapper);
       setTimeout(this.resize, 0);
     };
-
-    this.onClick = (event) => this.toggleResources(event);
 
     /**
      * Toggle display of resource list

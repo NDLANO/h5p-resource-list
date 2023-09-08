@@ -94,9 +94,7 @@ export const createList = (contentId, l10n, resources) => {
     if (resource.introductionImage) {
       const image = document.createElement('img');
       image.classList.add('h5p-resource-list-introduction-image');
-      image.role = 'presentation';
-      image.tabIndex = -1;
-      image.alt = resource.title;
+      image.alt = ''; // Merely decorational
       image.src = H5P.getPath(resource.introductionImage.path, contentId);
       contentContainer.appendChild(image);
     }

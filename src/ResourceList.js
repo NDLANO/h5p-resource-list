@@ -103,7 +103,6 @@ class ResourceList extends H5P.EventDispatcher {
 
   /**
    * Toggle display of resource list
-   * @param event
    */
   toggleResources() {
     const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
@@ -158,21 +157,21 @@ class ResourceList extends H5P.EventDispatcher {
   /**
    * Get list of classname and conditions for when to add the classname to the content type
    * 
-   * @return {[{className: string, shouldAdd: (function(*): boolean)}, {className: string, shouldAdd: (function(*): boolean|boolean)}, {className: string, shouldAdd: (function(*): boolean)}]}
+   * @return {{className: string, shouldAdd: (ratio: number) => boolean}[]}
    */
   breakpoints() {
     return [
       {
-        'className': this.mediumTabletSurface,
-        'shouldAdd': (ratio) => ratio >= 22 && ratio < 42,
+        className: this.mediumTabletSurface,
+        shouldAdd: (ratio) => ratio >= 22 && ratio < 42,
       },
       {
-        'className': this.largeTabletSurface,
-        'shouldAdd': (ratio) => ratio >= 42 && ratio < 60,
+        className: this.largeTabletSurface,
+        shouldAdd: (ratio) => ratio >= 42 && ratio < 60,
       },
       {
-        'className': this.largeSurface,
-        'shouldAdd': (ratio) => ratio >= 60,
+        className: this.largeSurface,
+        shouldAdd: (ratio) => ratio >= 60,
       },
     ];
   }

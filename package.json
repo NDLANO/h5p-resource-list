@@ -1,6 +1,6 @@
 {
   "name": "h5p-resource-list",
-  "version": "0.1.14",
+  "version": "1.0.15",
   "description": "Embeddable library that lets the user add links to resources for 'Further reading'",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

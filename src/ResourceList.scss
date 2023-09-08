@@ -216,7 +216,7 @@ $borderRadius: 5px;
     color: $textColor;
   }
 
-  #hideButton {
+  .h5p-resource-list-hide-text {
     font-size: 0.875rem;
     @include addStates($textColor, $activeColor, true);
   }

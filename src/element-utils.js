@@ -24,16 +24,15 @@ export const createHeader = (l10n, toggleResources) => {
   const hideContainer = document.createElement('button');
   hideContainer.addEventListener('click', toggleResources);
   hideContainer.classList.add('h5p-resource-list-hide');
-  hideContainer.setAttribute('aria-labelledby', 'hideButton');
 
   const buttonText = document.createElement('span');
   buttonText.className = 'h5p-resource-list-hide-text';
-  buttonText.id = 'hideButton';
   buttonText.innerText = l10n.hide;
   hideContainer.appendChild(buttonText);
 
   const hideIcon = document.createElement('span');
   hideIcon.className = 'fa fa-close';
+  hideIcon.setAttribute('aria-hidden', 'true');
   hideContainer.appendChild(hideIcon);
 
   wrapper.appendChild(hideContainer);
@@ -67,13 +66,15 @@ export const createList = (contentId, l10n, resources) => {
     if (!resource.title || resource.title.length === 0) {
       return;
     }
+    const resourceId = H5P.createUUID();
+
     const listElement = document.createElement('li');
     listElement.classList.add('h5p-resource-list-element');
     listElement.setAttribute('role', 'article');
 
     const title = document.createElement('div');
     title.classList.add('h5p-resource-list-title');
-    let labelAnchor = 'title_' + index;
+    let labelAnchor = resourceId + '-title_' + index;
     title.id = labelAnchor;
     title.textContent = resource.title;
     listElement.appendChild(title);
@@ -83,7 +84,7 @@ export const createList = (contentId, l10n, resources) => {
 
     if (resource.introduction && resource.introduction) {
       const introduction = document.createElement('p');
-      labelAnchor = 'intro_' + index;
+      labelAnchor = resourceId + '-intro_' + index;
       introduction.className = 'h5p-resource-list-introduction';
       introduction.innerHTML = resource.introduction;
       introduction.id = labelAnchor;

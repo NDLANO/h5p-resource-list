@@ -82,7 +82,7 @@ export const createList = (contentId, l10n, resources) => {
     const contentContainer = document.createElement('div');
     contentContainer.className = 'h5p-resource-list-content';
 
-    if (resource.introduction && resource.introduction) {
+    if (resource.introduction) {
       const introduction = document.createElement('p');
       labelAnchor = resourceId + '-intro_' + index;
       introduction.className = 'h5p-resource-list-introduction';
@@ -91,7 +91,7 @@ export const createList = (contentId, l10n, resources) => {
       contentContainer.appendChild(introduction);
     }
 
-    if (resource.introductionImage && resource.introductionImage) {
+    if (resource.introductionImage) {
       const image = document.createElement('img');
       image.classList.add('h5p-resource-list-introduction-image');
       image.role = 'presentation';
@@ -103,7 +103,7 @@ export const createList = (contentId, l10n, resources) => {
 
     listElement.appendChild(contentContainer);
 
-    if (resource.url && resource.url) {
+    if (resource.url) {
       const link = document.createElement('a');
       link.target = '_blank';
       link.classList.add('h5p-resource-list-link');

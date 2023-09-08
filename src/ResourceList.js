@@ -108,18 +108,18 @@ class ResourceList extends H5P.EventDispatcher {
     const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
     const isActive = this.wrapper.classList.contains('h5p-resource-list-active');
-    if (!isActive) {
+    if (isActive) {
+      this.wrapper.onkeydown = () => { };
+      this.listContainer.classList.remove('slide-in');
+      this.listContainer.classList.add('slide-out');
+      setTimeout(() => this.listContainer.classList.add('hidden'), 500);
+    }
+    else {
       const focusableElements = Array.from(this.listContainer.querySelectorAll(focusableElementsString));
       this.wrapper.onkeydown = (event) => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources);
       this.listContainer.classList.remove('hidden');
       this.listContainer.classList.remove('slide-out');
       this.listContainer.classList.add('slide-in');
-    }
-    else {
-      this.wrapper.onkeydown = () => { };
-      this.listContainer.classList.remove('slide-in');
-      this.listContainer.classList.add('slide-out');
-      setTimeout(() => this.listContainer.classList.add('hidden'), 500);
     }
     this.wrapper.classList.toggle('h5p-resource-list-active');
   }

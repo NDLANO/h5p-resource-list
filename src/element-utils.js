@@ -70,7 +70,6 @@ export const createList = (contentId, l10n, resources) => {
 
     const listElement = document.createElement('li');
     listElement.classList.add('h5p-resource-list-element');
-    listElement.setAttribute('role', 'article');
 
     const title = document.createElement('div');
     title.classList.add('h5p-resource-list-title');

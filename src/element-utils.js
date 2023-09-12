@@ -3,10 +3,11 @@ import resourceImage from '@assets/resources-icon.svg';
 /**
    * Create the header for the list
    * @param {object} l10n - Localization object
+   * @param {string} labelId - Id of the label
    * @param {() => void} toggleResources - Toggle resources callback
    * @return {HTMLDivElement} Header element
    */
-export const createHeader = (l10n, toggleResources) => {
+export const createHeader = (l10n, labelId, toggleResources) => {
   const wrapper = document.createElement('div');
   wrapper.classList.add('h5p-resource-list-header');
 
@@ -18,6 +19,7 @@ export const createHeader = (l10n, toggleResources) => {
 
   const header = document.createElement('div');
   header.classList.add('h5p-resource-list-header-text');
+  header.id = labelId;
   header.innerText = l10n.resources;
   wrapper.appendChild(header);
 

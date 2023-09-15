@@ -23,11 +23,7 @@ export const createHeader = (l10n, labelId, toggleResources) => {
   const hideContainer = document.createElement('button');
   hideContainer.addEventListener('click', toggleResources);
   hideContainer.classList.add('h5p-resource-list-hide');
-
-  const buttonText = document.createElement('span');
-  buttonText.className = 'h5p-resource-list-hide-text';
-  buttonText.innerText = l10n.hide;
-  hideContainer.appendChild(buttonText);
+  hideContainer.setAttribute('aria-label', l10n.hide);
 
   const hideIcon = document.createElement('span');
   hideIcon.className = 'fa fa-close';

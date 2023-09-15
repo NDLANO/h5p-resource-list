@@ -213,25 +213,35 @@ $borderRadius: 5px;
   cursor: pointer;
   display: inline-flex;
   margin-left: auto;
-  color: $textColor;
   background-color: transparent;
-  border: 0;
+  border: 1px solid rgba(37,59,115,.1);
+  border-radius: 50%;
+  padding: 0.25rem;
   align-items: center;
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: $textColor;
+  &:hover {
+    border-color: $textColor;
   }
 
-  .h5p-resource-list-hide-text {
-    font-size: 0.875rem;
-    @include addStates($textColor, $activeColor, true);
+  &:active {
+    border-color: $activeColor;
   }
 
-  .fa {
-    margin-left: 0.25rem;
-    font-size: 1.5rem;
+  span {
+    background-color: rgba(219,226,232,0.25);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    width: 1.25rem;
+    padding: 0.5rem;
+
+    &:hover {
+      background-color: inherit;
+    }
+
+    &:active {
+      background-color: #ebf0ff;
+    }
   }
 }
 
@@ -272,23 +282,23 @@ $borderRadius: 5px;
 
 .h5p-resource-list-button {
   border-radius: $borderRadius;
-  padding: 0.2rem;
+  padding: 0.25rem;
   border: 1px solid #dbe2e8;
   background-color: #ffffff;
 
   &:hover {
-    border-color: #2071e3;
+    border-color: $textColor;
   }
 
   &:active {
-    border-color: #1d53b8;
+    border-color: $activeColor;
   }
 
   .h5p-resource-list-button-content {
     display: flex;
     align-items: center;
     border-radius: inherit;
-    padding: 0.25rem 0.3125rem;
+    padding: 0.3125rem;
     background-color: rgba(219,226,232,0.25);
     background-size: cover;
     flex-wrap: nowrap;

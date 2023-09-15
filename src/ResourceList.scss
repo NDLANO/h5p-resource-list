@@ -55,11 +55,18 @@ $borderRadius: 5px;
     .h5p-resource-list-element {
       div {
         flex-direction: row;
+        flex-wrap: wrap-reverse;
       }
 
       .h5p-resource-list-introduction-image {
         width: 45%;
-        align-self: flex-start;
+        align-self: flex-end;
+        flex-grow: 1;
+      }
+
+      .h5p-resource-list-introduction {
+        width: 50%;
+        min-width: 45%;
       }
     }
 

@@ -1,5 +1,4 @@
 import './ResourceList.scss';
-import resourceImage from '@assets/resources-icon.svg';
 import { trapKeys, sanitizeParams } from './utils';
 import { createHeader, createBackground, createList } from './element-utils';
 
@@ -65,10 +64,9 @@ class ResourceList extends H5P.EventDispatcher {
     const buttonContent = document.createElement('div');
     buttonContent.className = 'h5p-resource-list-button-content';
 
-    const headerIcon = document.createElement('img');
-    headerIcon.className = 'h5p-resource-list-button-image';
-    headerIcon.alt = ''; // Merely decorational
-    headerIcon.src = resourceImage;
+    const headerIcon = document.createElement('span');
+    headerIcon.className = 'h5p-resource-list-button-icon';
+    headerIcon.setAttribute('aria-hidden', 'true');
     buttonContent.appendChild(headerIcon);
 
     const buttonText = document.createElement('span');

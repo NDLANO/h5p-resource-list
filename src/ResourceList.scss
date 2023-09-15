@@ -189,20 +189,23 @@ $borderRadius: 5px;
   align-items: center;
   box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
   min-height: pxToRem(64px);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
 
   .h5p-resource-list-header-text {
     display: block;
     font-size: 1.5em;
     margin-block-start: 0.83em;
     margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    margin-inline-start: 0.5rem;
+    margin-inline-end: 0;
     font-weight: bold;
   }
 
-  & > .h5p-resource-list-header-image {
-    height: auto;
+  & > .h5p-resource-list-header-icon {
+    background: transparent url(../assets/resources-icon.svg) center no-repeat;
+    background-size: contain;
+    height: 2.5rem;
+    width: 2.7rem;
   }
 }
 
@@ -304,7 +307,11 @@ $borderRadius: 5px;
     margin-left: 0.925rem;
   }
 
-  .h5p-resource-list-button-image {
+  .h5p-resource-list-button-icon {
+    background: transparent url(../assets/resources-icon.svg) center no-repeat;
+    background-size: contain;
+    height: pxToRem(22px);
     width: pxToRem(26px);
+    margin-left: 0;
   }
 }

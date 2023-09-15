@@ -48,6 +48,7 @@ $activeColor: #1d53b8;
 $borderRadius: 5px;
 
 .h5p-resource-list-wrapper {
+  &.h5p-resource-list-medium-tablet .h5p-resource-list-container,
   &.h5p-resource-list-large-tablet .h5p-resource-list-container,
   &.h5p-resource-list-large .h5p-resource-list-container
   {
@@ -57,15 +58,14 @@ $borderRadius: 5px;
       }
 
       .h5p-resource-list-introduction-image {
-        max-width: pxToRem(90px);
-        margin-left: 0.8rem;
+        width: 45%;
         align-self: flex-start;
       }
     }
 
     .h5p-resource-list {
       margin: 0;
-      padding: 0 10%;
+      padding: 0 1.5rem;
     }
   }
 
@@ -118,21 +118,29 @@ $borderRadius: 5px;
 }
 
 .h5p-resource-list-element {
-  padding-bottom: 1.2rem;
+  border: 1px solid rgba(37,59,115,.1);
+  border-radius: $borderRadius;
+  margin-top: 1.2rem;
+  padding: 1rem;
 
-  a {
+  .h5p-resource-list-link {
+    border: none;
+    border-radius: $borderRadius;
+    display: block;
+    padding: 1rem;
+    outline-offset: 0.2rem;
     @include addStates($textColor, $activeColor);
   }
 
   .h5p-resource-list-title {
-    margin: 1rem 0 0 0;
+    margin: 0;
     font-size: 1rem;
-    @include addStates($textColor, $activeColor, true);
   }
 
   div {
     display: flex;
     flex-direction: column-reverse;
+    gap: 1rem;
     margin-top: 1rem;
   }
 
@@ -144,15 +152,29 @@ $borderRadius: 5px;
     flex: auto;
   }
 
-  &:not(:last-child) {
-    border-bottom: 1px solid rgba(37,59,115,0.1);
+  &:last-child {
+    margin-bottom: 1.2rem;
   }
+
+  &:hover,
+  &:focus-within {
+    .h5p-resource-list-link {
+      background-color: rgba(219,226,232,0.25);
+
+      .h5p-resource-list-title {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.h5p-resource-list-element-with-link {
+  padding: 0.2rem;
 }
 
 .h5p-resource-list-introduction-image {
   max-width: 100%;
   align-self: center;
-  margin-bottom: 1rem;
 }
 
 .h5p-resource-list-header {
@@ -174,30 +196,6 @@ $borderRadius: 5px;
 
   & > .h5p-resource-list-header-image {
     height: auto;
-  }
-}
-
-.h5p-resource-list-link {
-  display: inline-flex;
-  border: 1px solid #dbe2e8;
-  padding: 0.25rem 0.5rem;
-  border-radius: $borderRadius;
-  margin-top: 1rem;
-  align-items: center;
-  font-size: 0.875rem;
-
-  span{
-    margin-left: 0.5rem;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: #ebf0ff;
-  }
-
-  &:active {
-    border-color: $activeColor;
-    background-color: #ebf0ff;
   }
 }
 

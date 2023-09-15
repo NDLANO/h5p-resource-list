@@ -73,12 +73,24 @@ export const createList = (contentId, l10n, resources) => {
     const listElement = document.createElement('li');
     listElement.classList.add('h5p-resource-list-element');
 
+    let listElementWrapper = listElement;
+
+    if (resource.url) {
+      const link = document.createElement('a');
+      link.classList.add('h5p-resource-list-link');
+      link.target = '_blank';
+      link.href = resource.url;
+      listElement.classList.add('h5p-resource-list-element-with-link');
+      listElement.appendChild(link);
+      listElementWrapper = link;
+    }
+
     const title = document.createElement('div');
     title.classList.add('h5p-resource-list-title');
     let labelAnchor = resourceId + '-title_' + index;
     title.id = labelAnchor;
     title.textContent = resource.title;
-    listElement.appendChild(title);
+    listElementWrapper.appendChild(title);
 
     const contentContainer = document.createElement('div');
     contentContainer.className = 'h5p-resource-list-content';
@@ -100,21 +112,8 @@ export const createList = (contentId, l10n, resources) => {
       contentContainer.appendChild(image);
     }
 
-    listElement.appendChild(contentContainer);
-
-    if (resource.url) {
-      const link = document.createElement('a');
-      link.target = '_blank';
-      link.classList.add('h5p-resource-list-link');
-      link.href = resource.url;
-      link.text = l10n.read;
-      link.setAttribute('aria-labelledby', labelAnchor);
-
-      const readIcon = document.createElement('span');
-      readIcon.className = 'fa fa-arrow-right';
-      link.appendChild(readIcon);
-
-      listElement.appendChild(link);
+    if (resource.introduction || resource.introductionImage) {
+      listElementWrapper.appendChild(contentContainer);
     }
 
     resourceList.appendChild(listElement);

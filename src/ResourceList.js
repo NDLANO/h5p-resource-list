@@ -27,7 +27,6 @@ class ResourceList extends H5P.EventDispatcher {
 
     this.l10n = Object.assign({
       hide: 'Hide',
-      read: 'Read',
       resources: 'Resources',
       resourcesLabel: 'See additional resources to get more information',
     }, this.params.l10n);

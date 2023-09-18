@@ -135,7 +135,7 @@ $borderRadius: 5px;
     border-radius: $borderRadius;
     display: block;
     padding: 1rem;
-    outline-offset: 0.2rem;
+    outline-offset: 0.25rem;
     @include addStates($textColor, $activeColor);
   }
 
@@ -176,7 +176,7 @@ $borderRadius: 5px;
 }
 
 .h5p-resource-list-element-with-link {
-  padding: 0.2rem;
+  padding: 0.25rem;
 }
 
 .h5p-resource-list-introduction-image {

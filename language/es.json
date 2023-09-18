@@ -35,10 +35,6 @@
           "default": "Ocultar"
         },
         {
-          "label": "Traducción para \"Leer\"",
-          "default": "Leer"
-        },
-        {
           "label": "Traducción de \"Recursos\"",
           "default": "Recursos"
         },

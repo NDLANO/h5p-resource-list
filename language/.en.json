@@ -35,10 +35,6 @@
           "default": "Hide"
         },
         {
-          "label": "Translation for \"Read\"",
-          "default": "Read"
-        },
-        {
           "label": "Translation for \"Resources\"",
           "default": "Resources"
         },

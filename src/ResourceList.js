@@ -1,5 +1,4 @@
 import './ResourceList.scss';
-import resourceImage from '@assets/resources-icon.svg';
 import { trapKeys, sanitizeParams } from './utils';
 import { createHeader, createBackground, createList } from './element-utils';
 
@@ -18,6 +17,7 @@ class ResourceList extends H5P.EventDispatcher {
 
     this.wrapper = null;
     this.listContainer = null;
+    this.button = null;
     this.container = null;
     this.currentRatio = null;
 
@@ -27,7 +27,6 @@ class ResourceList extends H5P.EventDispatcher {
 
     this.l10n = Object.assign({
       hide: 'Hide',
-      read: 'Read',
       resources: 'Resources',
       resourcesLabel: 'See additional resources to get more information',
     }, this.params.l10n);
@@ -64,10 +63,9 @@ class ResourceList extends H5P.EventDispatcher {
     const buttonContent = document.createElement('div');
     buttonContent.className = 'h5p-resource-list-button-content';
 
-    const headerIcon = document.createElement('img');
-    headerIcon.className = 'h5p-resource-list-button-image';
-    headerIcon.alt = ''; // Merely decorational
-    headerIcon.src = resourceImage;
+    const headerIcon = document.createElement('span');
+    headerIcon.className = 'h5p-resource-list-button-icon';
+    headerIcon.setAttribute('aria-hidden', 'true');
     buttonContent.appendChild(headerIcon);
 
     const buttonText = document.createElement('span');
@@ -79,18 +77,24 @@ class ResourceList extends H5P.EventDispatcher {
     readIcon.className = 'fa fa-arrow-right';
     buttonContent.appendChild(readIcon);
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.addEventListener('click', this.toggleResources.bind(this));
-    button.className = 'h5p-resource-list-button';
-    button.appendChild(buttonContent);
-    button.setAttribute('aria-label', this.l10n.resourcesLabel);
-    this.wrapper.appendChild(button);
+    this.button = document.createElement('button');
+    this.button.type = 'button';
+    this.button.addEventListener('click', this.toggleResources.bind(this));
+    this.button.className = 'h5p-resource-list-button';
+    this.button.appendChild(buttonContent);
+    this.button.setAttribute('aria-label', this.l10n.resourcesLabel);
+    this.wrapper.appendChild(this.button);
 
     this.listContainer = document.createElement('div');
     this.listContainer.classList.add('h5p-resource-list-container');
+    this.listContainer.setAttribute('role', 'dialog');
+    this.listContainer.setAttribute('aria-modal', 'true');
 
-    this.listContainer.appendChild(createHeader(this.l10n, this.toggleResources.bind(this)));
+    // Make sure dialog is properly labeled
+    const listContainerLabelId = H5P.createUUID() + '-label';
+    this.listContainer.setAttribute('aria-labelledby', listContainerLabelId);
+
+    this.listContainer.appendChild(createHeader(this.l10n, listContainerLabelId, this.toggleResources.bind(this)));
     this.listContainer.appendChild(createList(this.id, this.l10n, this.params.resourceList));
     this.listContainer.classList.add('hidden');
 
@@ -113,13 +117,16 @@ class ResourceList extends H5P.EventDispatcher {
       this.listContainer.classList.remove('slide-in');
       this.listContainer.classList.add('slide-out');
       setTimeout(() => this.listContainer.classList.add('hidden'), 500);
+      this.button.focus(); // Set focus on the resource list button
     }
     else {
       const focusableElements = Array.from(this.listContainer.querySelectorAll(focusableElementsString));
-      this.wrapper.onkeydown = (event) => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources);
+      this.wrapper.onkeydown = (event) => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources.bind(this));
       this.listContainer.classList.remove('hidden');
       this.listContainer.classList.remove('slide-out');
       this.listContainer.classList.add('slide-in');
+      // Wait for the animation to finish before focusing the first element
+      setTimeout(() => focusableElements[0].focus(), 500);
     }
     this.wrapper.classList.toggle('h5p-resource-list-active');
   }

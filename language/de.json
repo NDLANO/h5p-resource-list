@@ -35,10 +35,6 @@
           "default": "Ausblenden"
         },
         {
-          "label": "Text für Vorlesewerkzeuge: \"Lesen\"",
-          "default": "Lesen"
-        },
-        {
           "label": "Text für Vorlesewerkzeuge: \"Ressourcen\"",
           "default": "Ressourcen"
         },

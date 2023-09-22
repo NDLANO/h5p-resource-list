@@ -14,12 +14,6 @@ export default class ResourceList extends H5P.EventDispatcher {
     this.params = sanitizeParams(params);
     this.contentId = contentId;
 
-    this.wrapper = null;
-    this.listContainer = null;
-    this.button = null;
-    this.container = null;
-    this.currentRatio = null;
-
     this.mediumTabletSurface = 'h5p-resource-list-medium-tablet';
     this.largeTabletSurface = 'h5p-resource-list-large-tablet';
     this.largeSurface = 'h5p-resource-list-large';

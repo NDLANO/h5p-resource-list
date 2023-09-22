@@ -1,8 +1,8 @@
 /**
  * Create the header for the list.
- * @param {object} l10n - Localization object.
- * @param {string} labelId - Id of label.
- * @param {() => void} toggleResources - Toggle resources callback.
+ * @param {object} l10n Localization object.
+ * @param {string} labelId Id of label.
+ * @param {() => void} toggleResources Toggle resources callback.
  * @returns {HTMLDivElement} Header element,
  */
 export const createHeader = (l10n, labelId, toggleResources) => {
@@ -48,7 +48,7 @@ export const createBackground = (toggleResources) => {
 };
 
 /**
- * Create the resource list
+ * Create the resource list.
  * @param {number} contentId H5P content id.
  * @param {object} l10n Localization strings.
  * @param {object[]} resources Resources.
@@ -62,6 +62,7 @@ export const createList = (contentId, l10n, resources) => {
     if (!resource.title || resource.title.length === 0) {
       return;
     }
+
     const resourceId = H5P.createUUID();
 
     const listElement = document.createElement('li');
@@ -112,5 +113,6 @@ export const createList = (contentId, l10n, resources) => {
 
     resourceList.appendChild(listElement);
   });
+
   return resourceList;
 };

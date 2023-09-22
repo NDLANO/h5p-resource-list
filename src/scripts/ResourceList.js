@@ -6,13 +6,13 @@ export default class ResourceList extends H5P.EventDispatcher {
   /**
    * @class
    * @param {object} params Parameters.
-   * @param {number} id H5P content id.
+   * @param {number} contentId H5P content id.
    */
-  constructor(params, id) {
+  constructor(params, contentId) {
     super();
 
     this.params = sanitizeParams(params);
-    this.id = id;
+    this.contentId = contentId;
 
     this.wrapper = null;
     this.listContainer = null;
@@ -93,8 +93,12 @@ export default class ResourceList extends H5P.EventDispatcher {
     const listContainerLabelId = H5P.createUUID() + '-label';
     this.listContainer.setAttribute('aria-labelledby', listContainerLabelId);
 
-    this.listContainer.appendChild(createHeader(this.l10n, listContainerLabelId, this.toggleResources.bind(this)));
-    this.listContainer.appendChild(createList(this.id, this.l10n, this.params.resourceList));
+    this.listContainer.appendChild(createHeader(
+      this.l10n, listContainerLabelId, this.toggleResources.bind(this))
+    );
+    this.listContainer.appendChild(createList(
+      this.contentId, this.l10n, this.params.resourceList)
+    );
     this.listContainer.classList.add('hidden');
 
     this.wrapper.appendChild(createBackground(this.toggleResources.bind(this)));
@@ -105,27 +109,44 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-   * Toggle display of resource list
+   * Toggle display of resource list.
    */
   toggleResources() {
-    const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+    const isActive = this.wrapper.classList
+      .contains('h5p-resource-list-active');
 
-    const isActive = this.wrapper.classList.contains('h5p-resource-list-active');
     if (isActive) {
       this.wrapper.onkeydown = () => { };
       this.listContainer.classList.remove('slide-in');
       this.listContainer.classList.add('slide-out');
-      setTimeout(() => this.listContainer.classList.add('hidden'), 500);
+
+      setTimeout(() => {
+        this.listContainer.classList.add('hidden');
+      }, 500);
+
       this.button.focus(); // Set focus on the resource list button
     }
     else {
-      const focusableElements = Array.from(this.listContainer.querySelectorAll(focusableElementsString));
-      this.wrapper.onkeydown = (event) => trapKeys(event, focusableElements[0], focusableElements[focusableElements.length - 1], this.toggleResources.bind(this));
+      const focusableElements = Array.from(
+        this.listContainer.querySelectorAll(
+          ResourceList.FOCUSABLE_ELEMENTS_STRING
+        )
+      );
+
+      this.wrapper.onkeydown = (event) => trapKeys(
+        event,
+        focusableElements[0],
+        focusableElements[focusableElements.length - 1],
+        this.toggleResources.bind(this)
+      );
+
       this.listContainer.classList.remove('hidden');
       this.listContainer.classList.remove('slide-out');
       this.listContainer.classList.add('slide-in');
       // Wait for the animation to finish before focusing the first element
-      setTimeout(() => focusableElements[0].focus(), 500);
+      setTimeout(() => {
+        focusableElements[0].focus();
+      }, 500);
     }
     this.wrapper.classList.toggle('h5p-resource-list-active');
   }
@@ -136,7 +157,8 @@ export default class ResourceList extends H5P.EventDispatcher {
    */
   getRatio() {
     const computedStyles = window.getComputedStyle(this.container);
-    return this.container.offsetWidth / parseFloat(computedStyles.getPropertyValue('font-size'));
+    return this.container.offsetWidth /
+      parseFloat(computedStyles.getPropertyValue('font-size'));
   }
 
   /**
@@ -180,3 +202,9 @@ export default class ResourceList extends H5P.EventDispatcher {
     ];
   }
 }
+
+ResourceList.FOCUSABLE_ELEMENTS_STRING = [
+  'a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])',
+  'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object',
+  'embed', '[tabindex="0"]', '[contenteditable]'
+].join(', ');

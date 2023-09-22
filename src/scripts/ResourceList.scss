@@ -161,9 +161,8 @@ $borderRadius: 5px;
     }
 
     &.slide-in {
-      transform: translateX(0);
-      // animation: slide-in 0.5s forwards;
-      // -webkit-animation: slide-in 0.5s forwards;
+      animation: slide-in 0.5s forwards;
+      -webkit-animation: slide-in 0.5s forwards;
     }
 
     &.slide-out {

@@ -30,8 +30,6 @@ export default class ResourceList extends H5P.EventDispatcher {
       resourcesLabel: 'See additional resources to get more information',
     }, this.params.l10n);
 
-    this.hideContainer = this.hideContainer.bind(this);
-
     /**
      * Handle resize events
      */
@@ -90,6 +88,9 @@ export default class ResourceList extends H5P.EventDispatcher {
     this.listContainer.classList.add('h5p-resource-list-container');
     this.listContainer.setAttribute('role', 'dialog');
     this.listContainer.setAttribute('aria-modal', 'true');
+    this.listContainer.addEventListener('transitionend', () => {
+      this.handleTransitionEnd();
+    });
 
     // Make sure dialog is properly labeled
     const listContainerLabelId = H5P.createUUID() + '-label';
@@ -111,28 +112,10 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-   * Hide container.
+   * Handle transitionend of container.
    */
-  hideContainer() {
-    this.listContainer.classList.add('hidden');
-    this.listContainer.removeEventListener('transitionend', this.hideContainer);
-  }
-
-  /**
-   * Toggle display of resource list.
-   */
-  toggleResources() {
-    const isActive = this.wrapper.classList
-      .contains('h5p-resource-list-active');
-
-    if (isActive) {
-      this.wrapper.onkeydown = () => {};
-      this.listContainer.addEventListener('transitionend', this.hideContainer);
-      this.listContainer.classList.toggle('open', false);
-
-      this.button.focus(); // Set focus on the resource list button
-    }
-    else {
+  handleTransitionEnd() {
+    if (this.listContainer.classList.contains('open')) {
       const focusableElements = Array.from(
         this.listContainer.querySelectorAll(
           ResourceList.FOCUSABLE_ELEMENTS_STRING
@@ -148,15 +131,31 @@ export default class ResourceList extends H5P.EventDispatcher {
         );
       };
 
+      focusableElements[0].focus();
+    }
+    else {
+      this.listContainer.classList.add('hidden');
+    }
+  }
+
+  /**
+   * Toggle display of resource list.
+   */
+  toggleResources() {
+    const isActive = this.wrapper.classList
+      .contains('h5p-resource-list-active');
+
+    if (isActive) {
+      this.wrapper.onkeydown = () => {};
+      this.listContainer.classList.toggle('open', false);
+
+      this.button.focus(); // Set focus on the resource list button
+    }
+    else {
       this.listContainer.classList.remove('hidden');
       window.requestAnimationFrame(() => {
         this.listContainer.classList.toggle('open', true);
       });
-
-      // Wait for the animation to finish before focusing the first element
-      setTimeout(() => {
-        focusableElements[0].focus();
-      }, 500);
     }
     this.wrapper.classList.toggle('h5p-resource-list-active');
   }

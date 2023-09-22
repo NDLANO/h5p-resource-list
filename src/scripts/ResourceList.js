@@ -4,10 +4,9 @@ import { createHeader, createBackground, createList } from '@scripts/element-uti
 
 export default class ResourceList extends H5P.EventDispatcher {
   /**
-   * @constructor
-   *
-   * @param {object} params
-   * @param {number} id
+   * @class
+   * @param {object} params Parameters.
+   * @param {number} id H5P content id.
    */
   constructor(params, id) {
     super();
@@ -51,9 +50,9 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-     * Attach wrapper with resource list to container
-     * @param {jQuery} $container
-     */
+   * Attach wrapper with resource list to container.
+   * @param {H5P.jQuery} $container Container to attach to.
+   */
   attach($container) {
     this.container = $container;
 
@@ -132,9 +131,8 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-   * Get the ratio of the container
-   *
-   * @return {number} Ratio of container width / font size
+   * Get the ratio of the container.
+   * @returns {number} Ratio of container width / font size.
    */
   getRatio() {
     const computedStyles = window.getComputedStyle(this.container);
@@ -142,9 +140,9 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-   * Add/remove classname based on the ratio
-   * @param {HTMLElement} wrapper
-   * @param {number} ratio
+   * Add/remove classname based on the ratio.
+   * @param {HTMLElement} wrapper Wrapper.
+   * @param {number} ratio Ratio.
    */
   setWrapperClassFromRatio(wrapper, ratio = this.getRatio()) {
     if (ratio === this.currentRatio) {
@@ -162,9 +160,8 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
-   * Get list of classname and conditions for when to add the classname to the content type
-   *
-   * @return {{className: string, shouldAdd: (ratio: number) => boolean}[]}
+   * Get list of classname and conditions for when to add the classname to the content type.
+   * @returns {{object}[]} Breakpoints.
    */
   breakpoints() {
     return [
@@ -183,5 +180,3 @@ export default class ResourceList extends H5P.EventDispatcher {
     ];
   }
 }
-
-H5P.ResourceList = ResourceList;

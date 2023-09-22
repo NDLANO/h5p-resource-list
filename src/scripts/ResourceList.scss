@@ -1,58 +1,186 @@
-@use "sass:math";
-
-$browser-context: 16;
-
-/// Remove the unit of a length
-/// @param {Number} $number - Number to remove unit from
-/// @return {Number} - Unitless number
-@function _strip-unit($number) {
-  @if type-of($number) == 'number' and not unitless($number) {
-    @return math.div($number, $number * 0 + 1);
-  }
-
-  @return $number;
-}
-
-/// Convert px to rem
-/// @param {Number} $value - Number to convert
-/// @return {Number} - Converted number
-@function pxToRem($value){
-  $value: _strip-unit($value);
-  @return math.div($value, $browser-context) * 1rem;
-}
-
-/// Add states to a selector
-/// @param {String} $textColor - Text color
-/// @param {String} $activeColor - Active color
-/// @param {Boolean} $useUnderline - Use underline on hover
-/// @return {String} - CSS
-@mixin addStates($textColor, $activeColor, $useUnderline: false ) {
-  color: $textColor;
-  text-decoration: none;
-
-  @if($useUnderline){
-    &:hover {
-      text-decoration: underline;
-      color: $textColor;
-    }
-  }
-
-  &:active {
-    color: $activeColor;
-  }
-}
-
 $bgColor: #fff;
 $textColor: #2070e3;
 $activeColor: #1d53b8;
 $borderRadius: 5px;
 
 .h5p-resource-list-wrapper {
+  .h5p-resource-list-bg {
+    opacity: 0;
+    transition: opacity 250ms;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 9;
+  }
+
+  &.h5p-resource-list-active .h5p-resource-list-bg {
+    opacity: 0.8;
+    visibility: visible;
+  }
+
+  .h5p-resource-list-container {
+    width: 95%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: $bgColor;
+    z-index: 10;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(100%);
+
+    .h5p-resource-list-header {
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
+      min-height: 4rem;
+      padding: 0.5rem 1.5rem;
+
+      .h5p-resource-list-header-text {
+        display: block;
+        font-size: 1.5em;
+        margin-block-start: 0.83em;
+        margin-block-end: 0.83em;
+        margin-inline-start: 0.5rem;
+        margin-inline-end: 0;
+        font-weight: bold;
+      }
+
+      & > .h5p-resource-list-header-icon {
+        background: transparent url("@assets/resources-icon.svg") center no-repeat;
+        background-size: contain;
+        height: 2.5rem;
+        width: 2.7rem;
+      }
+
+      .h5p-resource-list-hide {
+        cursor: pointer;
+        display: inline-flex;
+        margin-left: auto;
+        background-color: transparent;
+        border: 1px solid rgba(37,59,115,.1);
+        border-radius: 50%;
+        padding: 0.25rem;
+        align-items: center;
+
+        &:hover {
+          border-color: $textColor;
+        }
+
+        &:active {
+          border-color: $activeColor;
+        }
+
+        span {
+          background-color: rgba(219,226,232,0.25);
+          border: none;
+          border-radius: 50%;
+          font-size: 1.25rem;
+          width: 1.25rem;
+          padding: 0.5rem;
+
+          &:hover {
+            background-color: inherit;
+          }
+
+          &:active {
+            background-color: #ebf0ff;
+          }
+        }
+      }
+    }
+
+    .h5p-resource-list {
+      list-style: none;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0 4%;
+
+      .h5p-resource-list-element {
+        border: 1px solid rgba(37,59,115,.1);
+        border-radius: $borderRadius;
+        margin-top: 1.2rem;
+        padding: 1rem;
+
+        .h5p-resource-list-link {
+          border: none;
+          border-radius: $borderRadius;
+          color: $textColor;
+          display: block;
+          outline-offset: 0.25rem;
+          padding: 1rem;
+          text-decoration: none;
+
+          &:active {
+            color: $activeColor;
+          }
+        }
+
+        .h5p-resource-list-title {
+          margin: 0;
+          font-size: 1rem;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column-reverse;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .h5p-resource-list-introduction {
+          color: initial;
+          line-height: 1.75rem;
+          font-size: 0.9rem;
+          margin: 0;
+          flex: auto;
+        }
+
+        &:last-child {
+          margin-bottom: 1.2rem;
+        }
+
+        &:hover,
+        &:focus-within {
+          .h5p-resource-list-link {
+            background-color: rgba(219,226,232,0.25);
+
+            .h5p-resource-list-title {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    &.slide-in {
+      transform: translateX(0);
+      // animation: slide-in 0.5s forwards;
+      // -webkit-animation: slide-in 0.5s forwards;
+    }
+
+    &.slide-out {
+      animation: slide-out 0.5s forwards;
+      -webkit-animation: slide-out 0.5s forwards;
+    }
+  }
+
   &.h5p-resource-list-medium-tablet .h5p-resource-list-container,
   &.h5p-resource-list-large-tablet .h5p-resource-list-container,
   &.h5p-resource-list-large .h5p-resource-list-container
   {
     .h5p-resource-list-element {
+      &.h5p-resource-list-element-with-link {
+        padding: 0.25rem;
+      }
+
       div {
         flex-direction: row;
         flex-wrap: wrap-reverse;
@@ -60,8 +188,9 @@ $borderRadius: 5px;
 
       .h5p-resource-list-introduction-image {
         width: 45%;
-        align-self: flex-end;
         flex-grow: 1;
+        max-width: 100%;
+        align-self: center;
       }
 
       .h5p-resource-list-introduction {
@@ -89,177 +218,6 @@ $borderRadius: 5px;
   }
 }
 
-.h5p-resource-list-bg {
-  opacity: 0;
-  transition: opacity 250ms;
-  background-color: black;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  visibility: hidden;
-  z-index: 9;
-}
-
-.h5p-resource-list-container {
-  width: 95%;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-  background-color: $bgColor;
-  z-index: 10;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transform: translateX(100%);
-}
-
-.h5p-resource-list {
-  list-style: none;
-  overflow-y: auto;
-  margin: 0;
-  padding: 0 4%;
-}
-
-.h5p-resource-list-element {
-  border: 1px solid rgba(37,59,115,.1);
-  border-radius: $borderRadius;
-  margin-top: 1.2rem;
-  padding: 1rem;
-
-  .h5p-resource-list-link {
-    border: none;
-    border-radius: $borderRadius;
-    display: block;
-    padding: 1rem;
-    outline-offset: 0.25rem;
-    @include addStates($textColor, $activeColor);
-  }
-
-  .h5p-resource-list-title {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .h5p-resource-list-introduction {
-    color: initial;
-    line-height: pxToRem(28px);
-    font-size: 0.9rem;
-    margin: 0;
-    flex: auto;
-  }
-
-  &:last-child {
-    margin-bottom: 1.2rem;
-  }
-
-  &:hover,
-  &:focus-within {
-    .h5p-resource-list-link {
-      background-color: rgba(219,226,232,0.25);
-
-      .h5p-resource-list-title {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.h5p-resource-list-element-with-link {
-  padding: 0.25rem;
-}
-
-.h5p-resource-list-introduction-image {
-  max-width: 100%;
-  align-self: center;
-}
-
-.h5p-resource-list-header {
-  display: flex;
-  align-items: center;
-  box-shadow: 0 0.3125em 0.3125em rgba(0, 0, 0, 0.06);
-  min-height: pxToRem(64px);
-  padding: 0.5rem 1.5rem;
-
-  .h5p-resource-list-header-text {
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0.5rem;
-    margin-inline-end: 0;
-    font-weight: bold;
-  }
-
-  & > .h5p-resource-list-header-icon {
-    background: transparent url("@assets/resources-icon.svg") center no-repeat;
-    background-size: contain;
-    height: 2.5rem;
-    width: 2.7rem;
-  }
-}
-
-.h5p-resource-list-hide {
-  cursor: pointer;
-  display: inline-flex;
-  margin-left: auto;
-  background-color: transparent;
-  border: 1px solid rgba(37,59,115,.1);
-  border-radius: 50%;
-  padding: 0.25rem;
-  align-items: center;
-
-  &:hover {
-    border-color: $textColor;
-  }
-
-  &:active {
-    border-color: $activeColor;
-  }
-
-  span {
-    background-color: rgba(219,226,232,0.25);
-    border: none;
-    border-radius: 50%;
-    font-size: 1.25rem;
-    width: 1.25rem;
-    padding: 0.5rem;
-
-    &:hover {
-      background-color: inherit;
-    }
-
-    &:active {
-      background-color: #ebf0ff;
-    }
-  }
-}
-
-.h5p-resource-list-active .h5p-resource-list-bg {
-  opacity: 0.8;
-  visibility: visible;
-}
-
-.slide-in {
-  animation: slide-in 0.5s forwards;
-  -webkit-animation: slide-in 0.5s forwards;
-}
-
-.slide-out {
-  animation: slide-out 0.5s forwards;
-  -webkit-animation: slide-out 0.5s forwards;
-}
-
 @keyframes slide-in {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
@@ -282,6 +240,7 @@ $borderRadius: 5px;
 
 .h5p-resource-list-button {
   border-radius: $borderRadius;
+  cursor: pointer;
   padding: 0.25rem;
   border: 1px solid #dbe2e8;
   background-color: #ffffff;
@@ -320,8 +279,8 @@ $borderRadius: 5px;
   .h5p-resource-list-button-icon {
     background: transparent url("@assets/resources-icon.svg") center no-repeat;
     background-size: contain;
-    height: pxToRem(22px);
-    width: pxToRem(26px);
+    height: 1.375rem;
+    width: 1.625rem;
     margin-left: 0;
   }
 }

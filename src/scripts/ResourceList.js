@@ -1,11 +1,11 @@
 import './ResourceList.scss';
-import { trapKeys, sanitizeParams } from './utils';
-import { createHeader, createBackground, createList } from './element-utils';
+import { trapKeys, sanitizeParams } from '@scripts/utils.js';
+import { createHeader, createBackground, createList } from '@scripts/element-utils.js';
 
-class ResourceList extends H5P.EventDispatcher {
+export default class ResourceList extends H5P.EventDispatcher {
   /**
    * @constructor
-   * 
+   *
    * @param {object} params
    * @param {number} id
    */
@@ -133,7 +133,7 @@ class ResourceList extends H5P.EventDispatcher {
 
   /**
    * Get the ratio of the container
-   * 
+   *
    * @return {number} Ratio of container width / font size
    */
   getRatio() {
@@ -163,7 +163,7 @@ class ResourceList extends H5P.EventDispatcher {
 
   /**
    * Get list of classname and conditions for when to add the classname to the content type
-   * 
+   *
    * @return {{className: string, shouldAdd: (ratio: number) => boolean}[]}
    */
   breakpoints() {

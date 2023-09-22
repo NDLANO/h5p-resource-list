@@ -15,6 +15,7 @@
   "author": "NDLA (https://www.ndla.no)",
   "license": "MIT",
   "contributors": [],
+  "type": "module",
   "devDependencies": {
     "@babel/cli": "^7.22.15",
     "@babel/core": "^7.22.20",

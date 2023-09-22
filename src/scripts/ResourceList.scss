@@ -202,7 +202,7 @@ $borderRadius: 5px;
   }
 
   & > .h5p-resource-list-header-icon {
-    background: transparent url(../assets/resources-icon.svg) center no-repeat;
+    background: transparent url("@assets/resources-icon.svg") center no-repeat;
     background-size: contain;
     height: 2.5rem;
     width: 2.7rem;
@@ -318,7 +318,7 @@ $borderRadius: 5px;
   }
 
   .h5p-resource-list-button-icon {
-    background: transparent url(../assets/resources-icon.svg) center no-repeat;
+    background: transparent url("@assets/resources-icon.svg") center no-repeat;
     background-size: contain;
     height: pxToRem(22px);
     width: pxToRem(26px);

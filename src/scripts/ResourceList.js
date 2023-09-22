@@ -126,7 +126,7 @@ export default class ResourceList extends H5P.EventDispatcher {
       .contains('h5p-resource-list-active');
 
     if (isActive) {
-      // this.wrapper.onkeydown = () => { };
+      this.wrapper.onkeydown = () => {};
       this.listContainer.addEventListener('transitionend', this.hideContainer);
       this.listContainer.classList.toggle('open', false);
 
@@ -139,12 +139,14 @@ export default class ResourceList extends H5P.EventDispatcher {
         )
       );
 
-      this.wrapper.onkeydown = (event) => trapKeys(
-        event,
-        focusableElements[0],
-        focusableElements[focusableElements.length - 1],
-        this.toggleResources.bind(this)
-      );
+      this.wrapper.onkeydown = (event) => {
+        trapKeys(
+          event,
+          focusableElements[0],
+          focusableElements[focusableElements.length - 1],
+          this.toggleResources.bind(this)
+        );
+      };
 
       this.listContainer.classList.remove('hidden');
       window.requestAnimationFrame(() => {

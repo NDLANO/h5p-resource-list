@@ -115,7 +115,7 @@ export default class ResourceList extends H5P.EventDispatcher {
    */
   hideContainer() {
     this.listContainer.classList.add('hidden');
-    this.listContainer.removeEventListener('animationend', this.hideContainer);
+    this.listContainer.removeEventListener('transitionend', this.hideContainer);
   }
 
   /**
@@ -126,8 +126,8 @@ export default class ResourceList extends H5P.EventDispatcher {
       .contains('h5p-resource-list-active');
 
     if (isActive) {
-      this.wrapper.onkeydown = () => { };
-      this.listContainer.addEventListener('animationend', this.hideContainer);
+      // this.wrapper.onkeydown = () => { };
+      this.listContainer.addEventListener('transitionend', this.hideContainer);
       this.listContainer.classList.toggle('open', false);
 
       this.button.focus(); // Set focus on the resource list button

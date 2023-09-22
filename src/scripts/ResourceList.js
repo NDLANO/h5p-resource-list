@@ -30,6 +30,8 @@ export default class ResourceList extends H5P.EventDispatcher {
       resourcesLabel: 'See additional resources to get more information',
     }, this.params.l10n);
 
+    this.hideContainer = this.hideContainer.bind(this);
+
     /**
      * Handle resize events
      */
@@ -109,6 +111,14 @@ export default class ResourceList extends H5P.EventDispatcher {
   }
 
   /**
+   * Hide container.
+   */
+  hideContainer() {
+    this.listContainer.classList.add('hidden');
+    this.listContainer.removeEventListener('animationend', this.hideContainer);
+  }
+
+  /**
    * Toggle display of resource list.
    */
   toggleResources() {
@@ -117,12 +127,8 @@ export default class ResourceList extends H5P.EventDispatcher {
 
     if (isActive) {
       this.wrapper.onkeydown = () => { };
-      this.listContainer.classList.remove('slide-in');
-      this.listContainer.classList.add('slide-out');
-
-      setTimeout(() => {
-        this.listContainer.classList.add('hidden');
-      }, 500);
+      this.listContainer.addEventListener('animationend', this.hideContainer);
+      this.listContainer.classList.toggle('open', false);
 
       this.button.focus(); // Set focus on the resource list button
     }
@@ -141,8 +147,10 @@ export default class ResourceList extends H5P.EventDispatcher {
       );
 
       this.listContainer.classList.remove('hidden');
-      this.listContainer.classList.remove('slide-out');
-      this.listContainer.classList.add('slide-in');
+      window.requestAnimationFrame(() => {
+        this.listContainer.classList.toggle('open', true);
+      });
+
       // Wait for the animation to finish before focusing the first element
       setTimeout(() => {
         focusableElements[0].focus();

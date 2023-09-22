@@ -160,14 +160,10 @@ $borderRadius: 5px;
       }
     }
 
-    &.slide-in {
-      animation: slide-in 0.5s forwards;
-      -webkit-animation: slide-in 0.5s forwards;
-    }
+    transition: transform, 0.5s;
 
-    &.slide-out {
-      animation: slide-out 0.5s forwards;
-      -webkit-animation: slide-out 0.5s forwards;
+    &.open {
+      transform: translateX(0%);
     }
   }
 
@@ -215,26 +211,6 @@ $borderRadius: 5px;
   &.h5p-resource-list-large .h5p-resource-list-container {
     width: 40%;
   }
-}
-
-@keyframes slide-in {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@-webkit-keyframes slide-in {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slide-out {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
-}
-
-@-webkit-keyframes slide-out {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
 }
 
 .h5p-resource-list-button {

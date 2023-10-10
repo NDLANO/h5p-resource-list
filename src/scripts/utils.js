@@ -63,12 +63,14 @@ export const sanitizeParams = (params) => {
       })
       .map((resource) => {
         const {
-          title
+          title,
+          introduction,
         } = resource;
 
         return {
           ...resource,
           title: decodeHTML(title),
+          introduction: decodeHTML(introduction),
         };
       }),
   };

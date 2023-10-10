@@ -57,15 +57,19 @@ export const sanitizeParams = (params) => {
   return {
     ...params,
     l10n: handleObject(l10n),
-    resourceList: resourceList.map((resource) => {
-      const {
-        title
-      } = resource;
+    resourceList: (resourceList ?? [])
+      .filter((resource) => {
+        return typeof resource === 'object' && Object.keys(resource).length;
+      })
+      .map((resource) => {
+        const {
+          title
+        } = resource;
 
-      return {
-        ...resource,
-        title: decodeHTML(title),
-      };
-    }),
+        return {
+          ...resource,
+          title: decodeHTML(title),
+        };
+      }),
   };
 };

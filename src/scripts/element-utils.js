@@ -1,10 +1,10 @@
 /**
-   * Create the header for the list
-   * @param {object} l10n - Localization object
-   * @param {string} labelId - Id of the label
-   * @param {() => void} toggleResources - Toggle resources callback
-   * @return {HTMLDivElement} Header element
-   */
+ * Create the header for the list.
+ * @param {object} l10n Localization object.
+ * @param {string} labelId Id of label.
+ * @param {function} toggleResources Toggle resources callback.
+ * @returns {HTMLDivElement} Header element,
+ */
 export const createHeader = (l10n, labelId, toggleResources) => {
   const wrapper = document.createElement('div');
   wrapper.classList.add('h5p-resource-list-header');
@@ -35,9 +35,9 @@ export const createHeader = (l10n, labelId, toggleResources) => {
 };
 
 /**
- * Create background to make a modal look of the list
- * @param {() => void} toggleResources - Toggle resources callback
- * @return {HTMLDivElement} Background element
+ * Create background to make a modal look of the list.
+ * @param {function} toggleResources Toggle resources callback.
+ * @returns {HTMLDivElement} Background element.
  */
 export const createBackground = (toggleResources) => {
   const listBackground = document.createElement('div');
@@ -48,10 +48,11 @@ export const createBackground = (toggleResources) => {
 };
 
 /**
- * Create the resource list
- * 
- * @param {Array} resources
- * @return {HTMLUListElement} List of resources as HTML element
+ * Create the resource list.
+ * @param {number} contentId H5P content id.
+ * @param {object} l10n Localization strings.
+ * @param {object[]} resources Resources.
+ * @returns {HTMLUListElement} List of resources as HTML element.
  */
 export const createList = (contentId, l10n, resources) => {
   const resourceList = document.createElement('ul');
@@ -61,6 +62,7 @@ export const createList = (contentId, l10n, resources) => {
     if (!resource.title || resource.title.length === 0) {
       return;
     }
+
     const resourceId = H5P.createUUID();
 
     const listElement = document.createElement('li');
@@ -111,5 +113,6 @@ export const createList = (contentId, l10n, resources) => {
 
     resourceList.appendChild(listElement);
   });
+
   return resourceList;
 };

@@ -1,48 +1,60 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import { dirname, resolve as _resolve, join } from 'path';
+import { fileURLToPath } from 'url';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserPlugin from 'terser-webpack-plugin'; // Provided by webpack
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const mode = process.argv.includes('--mode=production') ?
-  'production' : 'development';
+  'production' :
+  'development';
 const libraryName = process.env.npm_package_name;
 
-module.exports = {
-  mode: mode === 'production',
-  entry: {
-    dist: './src/ResourceList.js'
+export default {
+  mode: mode,
+  resolve: {
+    alias: {
+      '@assets': _resolve(__dirname, 'assets'),
+      '@scripts': _resolve(__dirname, 'src/scripts'),
+      '@services': _resolve(__dirname, 'src/scripts/services')
+    }
   },
-  output: {
-    filename: `${libraryName}.js`,
-    path: path.resolve(__dirname, 'dist'),
-    clean: true
+  optimization: {
+    minimize: mode === 'production',
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          }
+        }
+      })
+    ]
   },
-  target: ['browserslist'],
   plugins: [
     new MiniCssExtractPlugin({
       filename: `${libraryName}.css`
     })
   ],
-  resolve: {
-    modules: [
-      path.resolve(__dirname, 'src'),
-      'node_modules'
-    ],
-    alias: {
-      '@assets': path.resolve(__dirname, 'assets/')
-    }
+  entry: {
+    dist: './src/entries/dist.js'
   },
+  output: {
+    filename: `${libraryName}.js`,
+    path: _resolve(__dirname, 'dist'),
+    clean: true
+  },
+  target: ['browserslist'],
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
+        loader: 'babel-loader'
       },
       {
         test: /\.(s[ac]ss|css)$/,
-        include: path.resolve(__dirname, 'src'),
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -59,14 +71,19 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'assets'),
-        ],
+        test: /\.svg|\.jpg|\.png$/,
+        include: join(__dirname, 'src/images'),
+        type: 'asset/resource'
+      },
+      {
+        test: /\.woff$/,
+        include: join(__dirname, 'src/fonts'),
         type: 'asset/resource'
       }
     ]
+  },
+  stats: {
+    colors: true
   },
   ...(mode !== 'production' && { devtool: 'eval-cheap-module-source-map' })
 };

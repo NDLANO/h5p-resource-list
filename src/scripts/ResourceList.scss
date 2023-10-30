@@ -165,6 +165,10 @@ $borderRadius: 5px;
     &.open {
       transform: translateX(0%);
     }
+
+    &.hidden {
+      display: none;
+    }
   }
 
   &.h5p-resource-list-medium-tablet .h5p-resource-list-container,

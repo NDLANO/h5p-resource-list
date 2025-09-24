@@ -42,9 +42,12 @@
           "optional": true
         },
         {
-          "type": "image",
           "name": "introductionImage",
+          "type": "library",
           "label": "Introduction image",
+          "options": [
+            "H5P.Image 1.1"
+          ],
           "optional": true
         }
       ]

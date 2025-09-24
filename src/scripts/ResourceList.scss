@@ -180,21 +180,22 @@ $borderRadius: 5px;
         padding: 0.25rem;
       }
 
-      div {
+      .h5p-resource-list-content {
         flex-direction: row;
         flex-wrap: wrap-reverse;
-      }
+        gap: 1rem;
 
-      .h5p-resource-list-introduction-image {
-        width: 45%;
-        flex-grow: 1;
-        max-width: 100%;
-        align-self: center;
-      }
+        .h5p-resource-list-introduction {
+          width: 50%;
+          min-width: 45%;
+        }
 
-      .h5p-resource-list-introduction {
-        width: 50%;
-        min-width: 45%;
+        .h5p-resource-list-introduction-image-wrapper {
+          max-width: 45%;
+          flex-grow: 1;
+          max-width: 100%;
+          align-self: center;
+        }
       }
     }
 

@@ -99,12 +99,17 @@ export const createList = (contentId, l10n, resources) => {
       contentContainer.appendChild(introduction);
     }
 
-    if (resource.introductionImage) {
-      const image = document.createElement('img');
-      image.classList.add('h5p-resource-list-introduction-image');
-      image.alt = ''; // Merely decorational
-      image.src = H5P.getPath(resource.introductionImage.path, contentId);
-      contentContainer.appendChild(image);
+    if (resource.introductionImage?.params?.file?.path) {
+      const imageWrapper = document.createElement('div');
+      imageWrapper.className = 'h5p-resource-list-introduction-image-wrapper';
+      contentContainer.appendChild(imageWrapper);
+
+      H5P.newRunnable(
+        resource.introductionImage,
+        contentId,
+        H5P.jQuery(imageWrapper),
+        false
+      );
     }
 
     if (resource.introduction || resource.introductionImage) {

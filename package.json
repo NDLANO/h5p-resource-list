@@ -3,7 +3,6 @@
   "version": "1.0.16",
   "description": "Embeddable library that lets the user add links to resources for 'Further reading'",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint './src/**/*.js'",
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch"

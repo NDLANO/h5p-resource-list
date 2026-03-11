@@ -9,8 +9,8 @@
         }
       ],
       "field": {
-        "label": "Ressurser",
-        "description": "Valgfrie lenker til ressurser.",
+        "label": "Ressursar",
+        "description": "Valfrie lenkjer til ressursar.",
         "fields": [
           {
             "label": "Tittel på ressurs"
@@ -19,10 +19,10 @@
             "label": "Ingress"
           },
           {
-            "label": "Lenke"
+            "label": "Lenkje"
           },
           {
-            "label": "Ingressbilde"
+            "label": "Ingressbilete"
           }
         ]
       }
@@ -31,16 +31,16 @@
       "label": "Localize",
       "fields": [
         {
-          "label": "Oversettelse for \"Skjul\"",
+          "label": "Omsetjing for \"Skjul\"",
           "default": "Skjul"
         },
         {
-          "label": "Oversettelse for  \"Ressurser\"",
-          "default": "Ressurser"
+          "label": "Omsetjing for \"Ressursar\"",
+          "default": "Ressursar"
         },
         {
-          "label": "Tilgjengelighet for \"Resources\" knappen",
-          "default": "Se tilleggsressurser for å få mer informasjon"
+          "label": "Tilgjengelegheit for \"Resources\"-knappen",
+          "default": "Sjå tilleggsressursar for å få meir informasjon"
         }
       ]
     }

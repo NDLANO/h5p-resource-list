@@ -1,4 +1,4 @@
-import decode from 'he';
+import { decode } from 'he';
 
 /**
  * Decode HTML from text

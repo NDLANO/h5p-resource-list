@@ -1,4 +1,4 @@
-import he from 'he';
+import decode from 'he';
 
 /**
  * Decode HTML from text
@@ -6,7 +6,7 @@ import he from 'he';
  * @returns {string} Plain text.
  */
 const decodeHTML = (html) => {
-  return html ? he.decode(html) : '';
+  return html ? decode(html) : '';
 };
 
 /**
